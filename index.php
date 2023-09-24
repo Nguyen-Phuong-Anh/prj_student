@@ -6,7 +6,7 @@
     }
 
     switch ($route) {
-        case 'login': case '':
+        case '':
             require_once('./Controllers/AuthController.php');
             $controller = new AuthController();
             $controller->showLoginForm();
