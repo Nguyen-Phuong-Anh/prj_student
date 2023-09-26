@@ -12,10 +12,6 @@
     } else {
         $route = $requestUri;
     }
-    // echo $questionMarkPosition;
-    // cmt 
-    // lfakjsdf
-    // 123
 ;
 ?>
 <!DOCTYPE html>
@@ -26,11 +22,17 @@
     <title>Quản lý sinh viên</title>
     <link rel="stylesheet" href="styles.css" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         .homeBody {
             display: flex;
             height: 100vh;
+        }
+
+        .nav_btn {
+          outline: none;
+          border: none;
+          background-color: white;
         }
     </style>
 </head>
@@ -164,12 +166,12 @@
       </div>
   </div>
 
-  <div>
+  <div class="w-50 me-auto ms-auto">
       <?php
         if($route == 'home') {
           require_once('./Controllers/AdminController.php');
           $controller = new AdminController();
-          $controller->showManageStudent();
+          $controller->showManageAccount();
         }
       ?>
   </div>

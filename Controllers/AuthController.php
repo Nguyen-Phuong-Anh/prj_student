@@ -10,19 +10,18 @@
                     header("Location: ./");
                 }
                 $username = $_POST['username'];
-                $password = $_POST['password'];
+                // $password = $_POST['password'];
 
                 require_once('./Models/AuthModel.php');
                 $authoMod = new AuthModel();
-                $data = $authoMod->authenticate($username, $password);
-                print_r($data);
+                $data = $authoMod->authenticate($username);
 
                 //check the hash password
                 // $pwdHashed = $data['password'];
                 // $checkPwd = password_verify($pwd, $pwdHashed);
                 // if($checkPwd === false) {
 
-                // }
+                // } else {}
                 session_start();
                 $_SESSION['username'] = $data['tenTaiKhoan'];
                 $_SESSION['role'] = $data['maVaiTro'];
