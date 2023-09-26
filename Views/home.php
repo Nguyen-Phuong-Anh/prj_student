@@ -109,7 +109,7 @@
             </button>
             <div class='collapse text-white' id='student-collapse'>
             <form method='post' class='btn-toggle-nav list-unstyled fw-normal pb-1 small'>
-                <li><a href='#' class='nav-link text-white rounded'>Danh sách sinh viên</a></li>
+                <li><a href='.?route=student_list' class='nav-link text-white rounded'>Danh sách sinh viên</a></li>
                 <li><a href='.?route=add_student' class='nav-link text-white rounded'>Thêm sinh viên</a></li>
             </form>
             </div>
@@ -168,11 +168,21 @@
 
   <div class="w-50 me-auto ms-auto">
       <?php
-        if($route == 'home') {
+      switch ($route) {
+        case 'home':
           require_once('./Controllers/AdminController.php');
           $controller = new AdminController();
           $controller->showManageAccount();
-        }
+          break;
+        case 'add_student':
+          require_once('./Controllers/AdminController.php');
+          $controller = new AdminController();
+          $controller->showAddStudent();
+          break;
+        default:
+          
+          break;
+      }
       ?>
   </div>
 </body>
