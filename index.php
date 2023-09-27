@@ -11,7 +11,7 @@
             $controller = new AuthController();
             $controller->showLoginForm();
             break;
-        case 'home':
+        case 'home': case 'add_student': case 'student_list': case 'student_info':
             require_once('./Controllers/Controller.php');
             $controller = new Controller();
             $controller->showHome();

@@ -8,9 +8,14 @@
     $questionMarkPosition = strpos($requestUri, '=');
 
     if ($questionMarkPosition !== false) {
+      if (strpos($requestUri, '&') !== false) {
+        $parts = explode('&', $requestUri);
+        $route = substr($parts[0], strpos($parts[0], '=') + 1);
+      } else {
         $route = substr($requestUri, $questionMarkPosition + 1);
+      }
     } else {
-        $route = $requestUri;
+      $route = $requestUri;
     }
 ;
 ?>
@@ -33,6 +38,11 @@
           outline: none;
           border: none;
           background-color: white;
+        }
+
+        img {
+          width: 150px;
+          height: 150px;
         }
     </style>
 </head>
@@ -178,6 +188,17 @@
           require_once('./Controllers/AdminController.php');
           $controller = new AdminController();
           $controller->showAddStudent();
+          break;
+        case 'student_list':
+          require_once('./Controllers/AdminController.php');
+          $controller = new AdminController();
+          $controller->showStudentList();
+          break;
+
+        case 'student_info':
+          require_once('./Controllers/AdminController.php');
+          $controller = new AdminController();
+          $controller->showStudentInfo();
           break;
         default:
           
