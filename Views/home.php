@@ -3,7 +3,6 @@
     if(!$_SESSION['username']) {
         header('Location: ./');
     }
-
     $requestUri = $_SERVER['REQUEST_URI'];
     $questionMarkPosition = strpos($requestUri, '=');
 

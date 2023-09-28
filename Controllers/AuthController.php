@@ -22,11 +22,19 @@
                 // if($checkPwd === false) {
 
                 // } else {}
-                session_start();
-                $_SESSION['username'] = $data['tenTaiKhoan'];
-                $_SESSION['role'] = $data['maVaiTro'];
-                header("Location: .?route=home");
-                exit();
+                if($data['maVaiTro'] === '101') {
+                    session_start();
+                    $_SESSION['username'] = $data['tenTaiKhoan'];
+                    $_SESSION['role'] = $data['maVaiTro'];
+                    header("Location: .?route=home");
+                    exit();
+                } else if($data['maVaiTro'] === '103') {
+                    session_start();
+                    $_SESSION['username'] = $data['tenTaiKhoan'];
+                    $_SESSION['role'] = $data['maVaiTro'];
+                    header("Location: .?route=home_student");
+                    exit();
+                }
             }
         }
 

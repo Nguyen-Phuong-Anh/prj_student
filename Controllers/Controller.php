@@ -7,5 +7,9 @@
         public function showHome() {
             require_once('./Views/home.php');
         }
+
+        public function showHomeStudent() {
+            require_once('./Views/home_student.php');
+        }
     }
 ?>
