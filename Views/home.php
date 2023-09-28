@@ -132,8 +132,8 @@
             </button>
             <div class='collapse text-white' id='lecturer-collapse'>
             <ul class='btn-toggle-nav list-unstyled fw-normal pb-1 small'>
-                <li><a href='#' class='nav-link text-white rounded'>Danh sách giảng viên</a></li>
-                <li><a href='#' class='nav-link text-white rounded'>Thêm giảng viên</a></li>
+                <li><a href='.?route=lecturer_list' class='nav-link text-white rounded'>Danh sách giảng viên</a></li>
+                <li><a href='.?route=add_lecturer' class='nav-link text-white rounded'>Thêm giảng viên</a></li>
             </ul>
             </div>
         </li>
@@ -199,6 +199,22 @@
           require_once('./Controllers/AdminController.php');
           $controller = new AdminController();
           $controller->showStudentInfo();
+          break;
+        case 'add_lecturer':
+          require_once('./Controllers/AdminController.php');
+          $controller = new AdminController();
+          $controller->showAddLecturer();
+          break;
+        case 'lecturer_list':
+          require_once('./Controllers/AdminController.php');
+          $controller = new AdminController();
+          $controller->showLecturerList();
+          break;
+
+        case 'lecturer_info':
+          require_once('./Controllers/AdminController.php');
+          $controller = new AdminController();
+          $controller->showLecturerInfo();
           break;
         default:
           

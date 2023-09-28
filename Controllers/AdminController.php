@@ -1,19 +1,27 @@
 <?php
     class AdminController {
-        public function showAddStudent() {
-            require_once('./Views/admin/add_student.php');
-        }
-
         public function showManageAccount() {
             require_once('./Views/admin/manage_account.php');
         }
-
         public function showStudentList() {
-            require_once('./Views/admin/student_list.php');
+            require_once('./Views/admin/student/student_list.php');
+        }
+        public function showAddStudent() {
+            require_once('./Views/admin/student/add_student.php');
+        }
+        public function showStudentInfo() {
+            require_once('./Views/admin/student/student_info.php');
         }
 
-        public function showStudentInfo() {
-            require_once('./Views/admin/student_info.php');
+        public function showLecturerList() {
+            require_once('./Views/admin/lecturer/lecturer_list.php');
+        }
+        public function showAddLecturer() {
+            require_once('./Views/admin/lecturer/add_lecturer.php');
+        }
+
+        public function showLecturerInfo() {
+            require_once('./Views/admin/lecturer/lecturer_info.php');
         }
 
         public function handleSearchAccount() {
@@ -76,6 +84,27 @@
             $model->addAccount($maSV, $maSV, '103');
         }
 
+        public function handleAddLecturer() {
+            if(!$_POST['maNV'] || !$_POST['khoa_selector'] || !$_POST['hoTen'] || !$_POST['ngaySinh'] || !$_POST['gioiTinh'] || !$_POST['diaChi']) {
+                echo '<script>alert("Please fill all the information")</script>';
+                header("Location: ./");
+            }
+            $maNV = $_POST['maNV'];
+            $khoa = $_POST['khoa_selector'];
+            $hoTen = $_POST['hoTen'];
+            $ngaySinh = $_POST['ngaySinh'];
+            $gioiTinh = $_POST['gioiTinh'];
+            $diaChi = $_POST['diaChi'];
+            $chucVu = $_POST['chucVu'];
+            $email = $_POST['email'];
+            $tel = $_POST['tel'];
+
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $model->addLecturer($maNV, $khoa, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $chucVu, $email, $tel);
+            $model->addAccount($maNV, $maNV, '102');
+        }
+
         //search
         public function handleSearchStudent() {
             if(!$_POST['maSV']) {
@@ -94,6 +123,20 @@
             return $data;
         }
 
+        public function handleSearchLecturer() {
+            if(!$_POST['maNV']) {
+                $maNV = '';
+            } else $maNV = $_POST['maNV'];
+            if($_POST['khoa_selector'] === 'Khoa') {
+                $khoa = '';
+            } else $khoa = $_POST['khoa_selector'];
+
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $data = $model->getSearchLecturer($maNV, $khoa);
+            return $data;
+        }
+
         public function handleGetStudent() {
             $maSV = $_GET['param'];
             require_once('./Models/AdminModel.php');
@@ -104,11 +147,41 @@
             $array = [$data, $khoa];
             return $array;
         }
+        
+        public function handleGetLecturer() {
+            $maNV = $_GET['param'];
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $data = $model->getLecturer($maNV);
+            $khoa = $model->getKhoa();
+            $lop = $model->getLop($maNV);
+            $array = array();
+            $array = [$data, $khoa, $lop];
+            return $array;
+        }
 
         public function handleUpdateStudent($oldInfo) {
             require_once('./Models/AdminModel.php');
             $model = new AdminModel($oldInfo);
             $model->updateStudent($oldInfo);
+        }
+
+        public function handleUpdateLecturer($oldInfo) {
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel($oldInfo);
+            $model->updateLecturer($oldInfo);
+        }
+
+        public function handleDeleteStudent($maSV) {
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel($maSV);
+            $model->deleteStudent($maSV);
+        }
+        
+        public function handleDeleteLecturer($maNV) {
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel($maNV);
+            $model->deleteLecturer($maNV);
         }
     }
 ?>

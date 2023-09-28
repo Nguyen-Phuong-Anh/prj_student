@@ -4,6 +4,16 @@
     $array = $controller->handleGetStudent();
 ?>
 
+<script>
+if (typeof window.updateSuccessful !== 'undefined') {
+    if (window.updateSuccessful) {
+        location.reload(); // Reload the page only if update was successful
+    }
+    // Reset the variable to prevent further reloads
+    window.updateSuccessful = undefined;
+}
+</script>
+
 <form method="post" action="">
     <div>
         <h1>Thông tin sinh viên</h1>
@@ -84,5 +94,9 @@
         require_once('./Controllers/AdminController.php');
         $controller = new AdminController();
         $controller->handleUpdateStudent($array[0]);
+    } else if(isset($_POST['delete_std'])) {
+        require_once('./Controllers/AdminController.php');
+        $controller = new AdminController();
+        $controller->handleDeleteStudent($array[0][0]['maSinhVien']);
     }
 ?>
