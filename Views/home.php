@@ -140,15 +140,11 @@
         </li>";
         echo "<li>
         <li class='mb-1'>
-            <button class='btn btn-toggle text-white align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#tuition-collapse' aria-expanded='false'>
-            Quản lý học phí
-            </button>
-            <div class='collapse text-white' id='tuition-collapse'>
-            <ul class='btn-toggle-nav list-unstyled fw-normal pb-1 small'>
-                <li><a href='#' class='nav-link text-white rounded'>Danh sách học phí</a></li>
-                <li><a href='#' class='nav-link text-white rounded'>Thêm học phí</a></li>
-            </ul>
-            </div>
+            <a href='.?route=tuition'>
+              <button class='btn btn-toggle text-white align-items-center rounded'>
+                Quản lý học phí
+              </button>
+            </a>
         </li>
         </li>";
         echo "<li>
@@ -215,6 +211,17 @@
           require_once('./Controllers/AdminController.php');
           $controller = new AdminController();
           $controller->showLecturerInfo();
+          break;
+
+        case 'tuition':
+          require_once('./Controllers/AdminController.php');
+          $controller = new AdminController();
+          $controller->showTuitionList();
+          break;
+        case 'tuition_info':
+          require_once('./Controllers/AdminController.php');
+          $controller = new AdminController();
+          $controller->showTuitionInfo();
           break;
         default:
           

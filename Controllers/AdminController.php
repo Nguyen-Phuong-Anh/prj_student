@@ -24,6 +24,13 @@
             require_once('./Views/admin/lecturer/lecturer_info.php');
         }
 
+        public function showTuitionList() {
+            require_once('./Views/admin/student/tuition_list.php');
+        }
+        public function showTuitionInfo() {
+            require_once('./Views/admin/student/tuition_info.php');
+        }
+
         public function handleSearchAccount() {
             $search = $_POST['search'];
             require_once('./Models/AdminModel.php');
@@ -123,6 +130,20 @@
             return $data;
         }
 
+        public function handleSearchTuition() {
+            if(!$_POST['maSV']) {
+                $maSV = '';
+            } else $maSV = $_POST['maSV'];
+            if($_POST['khoa_selector'] === 'Khoa') {
+                $khoa = '';
+            } else $khoa = $_POST['khoa_selector'];
+
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $data = $model->getSearchTuition($maSV, $khoa);
+            return $data;
+        }
+
         public function handleSearchLecturer() {
             if(!$_POST['maNV']) {
                 $maNV = '';
@@ -146,6 +167,14 @@
             $array = array();
             $array = [$data, $khoa];
             return $array;
+        }
+        
+        public function handleGetTuition() {
+            $maHphi = $_GET['param'];
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $data = $model->getTuition($maHphi);
+            return $data;
         }
         
         public function handleGetLecturer() {

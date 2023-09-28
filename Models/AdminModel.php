@@ -187,7 +187,7 @@
             $searchmaSV = "%{$maSV}%";
             $searchnienKhoa = "%{$nienKhoa}%";
             $searchkhoa = "%{$khoa}%";
-            $sql = "SELECT maSinhVien, khoa, hoTen, ngaySinh, gioiTinh FROM sinhvien WHERE maSinhVien LIKE ? AND hocKyHienTai LIKE ? AND khoa LIKE ?;";
+            $sql = "SELECT maSinhVien, khoa, hoTen, ngaySinh, gioiTinh FROM sinhvien WHERE maSinhVien LIKE ? AND khoa LIKE ? AND maKhoa LIKE ?;";
             $stmt = mysqli_stmt_init($conn);
 
             if(!mysqli_stmt_prepare($stmt, $sql)) { 
@@ -196,6 +196,28 @@
             }
 
             mysqli_stmt_bind_param($stmt, "sss", $searchmaSV, $searchnienKhoa, $searchkhoa);
+            mysqli_stmt_execute($stmt);
+
+            $resultData = mysqli_stmt_get_result($stmt);
+            return $resultData;
+
+            mysqli_stmt_close($stmt);
+            $conn->close();
+        }
+
+        public function getSearchTuition($maSV, $khoa) {
+            require('./Config/DBConn.php');
+            $searchmaSV = "%{$maSV}%";
+            $searchkhoa = "%{$khoa}%";
+            $sql = "SELECT * FROM hocphi WHERE maSinhVien LIKE ? AND maKhoa LIKE ?;";
+            $stmt = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, "ss", $searchmaSV, $searchkhoa);
             mysqli_stmt_execute($stmt);
 
             $resultData = mysqli_stmt_get_result($stmt);
@@ -250,6 +272,27 @@
             $conn->close();
 
             return $rows;
+        }
+
+        public function getTuition($maHphi) {
+            require('./Config/DBConn.php');
+            $sql = "SELECT * FROM chitiethocphi WHERE maHocPhi= ?;";
+            $stmt = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, "s", $maHphi);
+            mysqli_stmt_execute($stmt);
+
+            $resultData = mysqli_stmt_get_result($stmt);
+
+            mysqli_stmt_close($stmt);
+            $conn->close();
+
+            return $resultData;
         }
 
         public function getLecturer($maNV) {
