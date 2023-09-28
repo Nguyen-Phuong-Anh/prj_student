@@ -57,6 +57,16 @@
             thong tin sv
           </a>
         </li>
+        <li class='nav-item'>
+          <a href='.?route=student_info' class='nav-link active' aria-current='page'>
+            thong tin sv
+          </a>
+        </li>   
+        <li class='nav-item'>
+          <a href='.?route=123' class='nav-link active' aria-current='page'>
+            học phí
+          </a>
+        </li>
     </ul>
     <hr>
     <div>
@@ -70,9 +80,12 @@
   <div class="w-50 me-auto ms-auto">
     <?php
         switch ($route) {
-            case 'student_info':
-                
-            break;
+            case '123':
+              case 'student_info':
+                require_once('./Controllers/StudentContriller.php');
+                $controller = new studentController();
+                $controller->showHome123();
+                break;
         }
     ?>
   </div>

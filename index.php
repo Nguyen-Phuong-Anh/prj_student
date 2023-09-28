@@ -18,7 +18,7 @@
             $controller = new Controller();
             $controller->showHome();
             break;
-        case 'home_student': 
+        case 'home_student': case '123' : 
             require_once('./Controllers/Controller.php');
             $controller = new Controller();
             $controller->showHomeStudent();
