@@ -35,6 +35,24 @@
         mysqli_stmt_close($stmt);
     }
 
+    function checkSubjectDuplicate($maHP, $conn) {
+        $sql = "SELECT * FROM hocphan WHERE maHocPhan= ?;";
+        $stmt = mysqli_stmt_init($conn); 
+
+        if(!mysqli_stmt_prepare($stmt, $sql)) {
+            header("Location: ./");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "s",$maHP); //
+        
+        if(mysqli_stmt_execute($stmt)) {
+            return FALSE;
+        } else return TRUE;
+
+        mysqli_stmt_close($stmt);
+    }
+
     function hashPwd($password) {
         $hasedPwd = password_hash($password, PASSWORD_DEFAULT);
         return $hasedPwd;

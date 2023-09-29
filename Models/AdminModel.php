@@ -43,6 +43,9 @@
 
                 if(mysqli_stmt_execute($stmt)) {
                     echo '<script>alert("Successfully added account")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=home';
+                    </script>";
                 } else {
                     echo '<script>alert("Failed to add account")</script>';
                 }
@@ -72,6 +75,9 @@
 
             if(mysqli_stmt_execute($stmt)) {
                 echo '<script>alert("Successfully make changes to the account")</script>';
+                echo "<script>
+                window.location = 'http://localhost/prj_student/?route=home';
+                </script>";
             } else {
                 echo '<script>alert("Failed to make changes account")</script>';
             }
@@ -139,6 +145,9 @@
 
                 if(mysqli_stmt_execute($stmt)) {
                     echo '<script>alert("Successfully added student")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=add_student';
+                    </script>";
                 } else {
                     echo '<script>alert("Failed to add student")</script>';
                 }
@@ -169,16 +178,50 @@
                 mysqli_stmt_bind_param($stmt, "ssssssssss", $maNV, $maNV, $khoa, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $chucVu, $email, $tel);
 
                 if(mysqli_stmt_execute($stmt)) {
-                    echo '<script>alert("Successfully added student")</script>';
+                    echo '<script>alert("Successfully added lecturer")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=add_lecturer';
+                    </script>";
                 } else {
-                    echo '<script>alert("Failed to add student")</script>';
+                    echo '<script>alert("Failed to add lecturer")</script>';
                 }
     
                 mysqli_stmt_close($stmt);
             } else {
-                echo '<script>alert("Student existed!")</script>';
+                echo '<script>alert("Lecturer existed!")</script>';
             }
             
+            $conn->close();
+        }
+
+        public function addSubject($maHocPhan, $khoa, $tenMonHoc, $soTinChi, $batBuoc, $hocPhiMotTin) {
+            require('./Config/DBConn.php');
+            require_once('./Hooks/AdminHooks.php');
+
+            if(!checkSubjectDuplicate($maHocPhan, $conn)) {
+                $sql = "INSERT INTO hocphan (maHocPhan, maKhoa, tenMonHoc, soTinChi, batBuoc, hocPhiMotTin) VALUES (?, ?, ?, ?, ?, ?);";
+                
+                $stmt = mysqli_stmt_init($conn);
+
+                if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                    header("Location: ./");
+                    exit();
+                }
+
+                mysqli_stmt_bind_param($stmt, "ssssss", $maHocPhan, $khoa, $tenMonHoc, $soTinChi, $batBuoc, $hocPhiMotTin);
+
+                if(mysqli_stmt_execute($stmt)) {
+                    echo '<script>alert("Successfully added subject")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=add_subject';
+                    </script>";
+                } else {
+                    echo '<script>alert("Failed to add subject")</script>';
+                }
+                mysqli_stmt_close($stmt);
+            } else {
+                echo '<script>alert("Subject existed!")</script>';
+            }
             $conn->close();
         }
 
@@ -227,6 +270,26 @@
             $conn->close();
         }
 
+        public function getSearchSubject($khoa) {
+            require('./Config/DBConn.php');
+            $sql = "SELECT * FROM hocphan WHERE maKhoa= ?;";
+            $stmt = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, "s", $khoa);
+            mysqli_stmt_execute($stmt);
+
+            $resultData = mysqli_stmt_get_result($stmt);
+            return $resultData;
+
+            mysqli_stmt_close($stmt);
+            $conn->close();
+        }
+
         public function getSearchLecturer($maSV, $khoa) {
             require('./Config/DBConn.php');
             $searchmaSV = "%{$maSV}%";
@@ -260,6 +323,31 @@
             }
 
             mysqli_stmt_bind_param($stmt, "s", $maSV);
+            mysqli_stmt_execute($stmt);
+
+            $resultData = mysqli_stmt_get_result($stmt);
+            $rows = array();
+            while ($row = mysqli_fetch_assoc($resultData)) {
+                $rows[] = $row;
+            }
+            
+            mysqli_stmt_close($stmt);
+            $conn->close();
+
+            return $rows;
+        }
+        
+        public function getSubject($maHphan) {
+            require('./Config/DBConn.php');
+            $sql = "SELECT * FROM hocphan WHERE maHocPhan= ?;";
+            $stmt = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, "s", $maHphan);
             mysqli_stmt_execute($stmt);
 
             $resultData = mysqli_stmt_get_result($stmt);
@@ -390,8 +478,10 @@
 
 
                 if (mysqli_stmt_execute($stmt)) {
-                    // echo '<script>alert("Update successful!")</script>';
-                    echo '<script>window.updateSuccessful = true;</script>';
+                    echo '<script>alert("Updated successfully!")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=lecturer_list';
+                    </script>";
                 } else {
                     echo '<script>alert("Update failed!")</script>';
                 }
@@ -402,6 +492,80 @@
                 exit();
             }
             
+            $conn->close();
+        }
+
+        public function updateSubject($oldInfo) {
+            require('./Config/DBConn.php');
+            $updateMaKhoa = isset($_POST['maKhoa']) ? $_POST['maKhoa'] : $oldInfo[0]['maKhoa'];
+            $updateTenMonHoc = isset($_POST['tenMonHoc']) ? $_POST['tenMonHoc'] : $oldInfo[0]['tenMonHoc'];
+            $updateSoTinChi = isset($_POST['soTinChi']) ? $_POST['soTinChi'] : $oldInfo[0]['soTinChi'];
+            if(isset($_POST['batBuoc']) && $_POST['batBuoc'] === "checked") {
+                $updateBatBuoc = 1;
+            } else {
+                $updateBatBuoc = 0;
+            }
+            $updateHocPhiMotTin = isset($_POST['hocPhiMotTin']) ? $_POST['hocPhiMotTin'] : $oldInfo[0]['hocPhiMotTin'];
+            
+            $sql = "UPDATE hocphan SET 
+            maKhoa = ?, 
+            tenMonHoc = ?, 
+            soTinChi = ?, 
+            batBuoc = ?, 
+            hocPhiMotTin = ?
+            WHERE maHocPhan = ?;";
+
+            $stmt = mysqli_stmt_init($conn);
+
+            $maHocPhan = $oldInfo[0]['maHocPhan'];
+            if (mysqli_stmt_prepare($stmt, $sql)) {
+                mysqli_stmt_bind_param($stmt, "ssssss", 
+                    $updateMaKhoa, 
+                    $updateTenMonHoc, 
+                    $updateSoTinChi, 
+                    $updateBatBuoc, 
+                    $updateHocPhiMotTin, 
+                    $maHocPhan
+                );
+
+                if (mysqli_stmt_execute($stmt)) {
+                    if($updateSoTinChi !== $oldInfo[0]['soTinChi'] || $updateHocPhiMotTin !== $oldInfo[0]['hocPhiMotTin']) {
+                        $sql1 = "UPDATE chitiethocphi SET 
+                        hocPhiMotTin = ?,
+                        soTinChi = ?,
+                        thanhTien = ?
+                        WHERE maHocPhan = ?;";
+                        $updateThanhTien = intval($updateSoTinChi) * intval($updateHocPhiMotTin);
+                        if (mysqli_stmt_prepare($stmt, $sql1)) {
+                            mysqli_stmt_bind_param($stmt, "ssss", 
+                                $updateHocPhiMotTin, 
+                                $updateSoTinChi,
+                                $updateThanhTien,
+                                $maHocPhan
+                            );
+                            if (mysqli_stmt_execute($stmt)) {
+                                echo '<script>alert("Updated successfully!")</script>';
+                                echo "<script>
+                                window.location = 'http://localhost/prj_student/?route=subject_list';
+                                </script>";
+                            } else {
+                                echo '<script>alert("Update failed!")</script>';
+                            }
+                        }
+                    } 
+                    echo '<script>alert("Updated successfully!")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=subject_list';
+                    </script>";
+                } else {
+                    echo '<script>alert("Update failed!")</script>';
+                }
+            } else {
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_close($stmt);
             $conn->close();
         }
 
@@ -420,6 +584,9 @@
 
             if (mysqli_stmt_execute($stmt)) {
                 echo '<script>alert("Delete successful!")</script>';
+                echo "<script>
+                window.location = 'http://localhost/prj_student/?route=student_list';
+                </script>";
             } else {
                 echo '<script>alert("Delete failed!")</script>';
             }
@@ -443,6 +610,45 @@
 
             if (mysqli_stmt_execute($stmt)) {
                 echo '<script>alert("Delete successful!")</script>';
+                echo "<script>
+                window.location = 'http://localhost/prj_student/?route=lecturer_list';
+                </script>";
+            } else {
+                echo '<script>alert("Delete failed!")</script>';
+            }
+            
+            mysqli_stmt_close($stmt);
+            $conn->close();
+        }
+        
+        public function deleteSubject($maMH) {
+            require('./Config/DBConn.php');
+
+            $sql = "DELETE FROM hocphan WHERE maHocPhan= ?;";
+            $stmt = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, "s", $maMH);
+
+            if (mysqli_stmt_execute($stmt)) {
+                $sql1 = "DELETE FROM chitiethocphi WHERE maHocPhan= ?;";
+                if(!mysqli_stmt_prepare($stmt, $sql1)) { 
+                    echo '<script>alert("Delete failed!")</script>';
+                } else {
+                    mysqli_stmt_bind_param($stmt, "s", $maMH);
+                    if (!mysqli_stmt_execute($stmt)) {
+                        echo '<script>alert("Delete failed!")</script>';
+                    } else {
+                        echo '<script>alert("Delete successful!")</script>';
+                        echo "<script>
+                        window.location = 'http://localhost/prj_student/?route=subject_list';
+                        </script>";
+                    }
+                }
             } else {
                 echo '<script>alert("Delete failed!")</script>';
             }

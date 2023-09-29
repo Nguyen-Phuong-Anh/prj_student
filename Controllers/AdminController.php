@@ -16,6 +16,16 @@
         public function showLecturerList() {
             require_once('./Views/admin/lecturer/lecturer_list.php');
         }
+        public function showSubjectList() {
+            require_once('./Views/admin/subject_list.php');
+        }
+
+        public function showSubjectInfo() {
+            require_once('./Views/admin/subject_info.php');
+        }
+        public function showAddSubject() {
+            require_once('./Views/admin/add_subject.php');
+        }
         public function showAddLecturer() {
             require_once('./Views/admin/lecturer/add_lecturer.php');
         }
@@ -112,6 +122,23 @@
             $model->addAccount($maNV, $maNV, '102');
         }
 
+        public function handleAddSubject() {
+            if(!$_POST['maHocPhan'] || !$_POST['khoa_selector'] || !$_POST['tenMonHoc'] || !$_POST['soTinChi'] || !$_POST['hocPhiMotTin']) {
+                echo '<script>alert("Please fill all the information")</script>';
+                header("Location: ./");
+            }
+            $maHocPhan = $_POST['maHocPhan'];
+            $khoa = $_POST['khoa_selector'];
+            $tenMonHoc = $_POST['tenMonHoc'];
+            $soTinChi = $_POST['soTinChi'];
+            $batBuoc = $_POST['batBuoc'];
+            $hocPhiMotTin = $_POST['hocPhiMotTin'];
+
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $model->addSubject($maHocPhan, $khoa, $tenMonHoc, $soTinChi, $batBuoc, $hocPhiMotTin);
+        }
+
         //search
         public function handleSearchStudent() {
             if(!$_POST['maSV']) {
@@ -141,6 +168,17 @@
             require_once('./Models/AdminModel.php');
             $model = new AdminModel();
             $data = $model->getSearchTuition($maSV, $khoa);
+            return $data;
+        }
+
+        public function handleSearchSubject() {
+            if($_POST['khoa_selector'] === 'Khoa') {
+                $khoa = '';
+            } else $khoa = $_POST['khoa_selector'];
+
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $data = $model->getSearchSubject($khoa);
             return $data;
         }
 
@@ -177,6 +215,17 @@
             return $data;
         }
         
+        public function handleGetSubject() {
+            $maHphan = $_GET['param'];
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $data = $model->getSubject($maHphan);
+            $khoa = $model->getKhoa();
+            $array = array();
+            $array = [$data, $khoa];
+            return $array;
+        }
+        
         public function handleGetLecturer() {
             $maNV = $_GET['param'];
             require_once('./Models/AdminModel.php');
@@ -194,6 +243,12 @@
             $model = new AdminModel($oldInfo);
             $model->updateStudent($oldInfo);
         }
+        
+        public function handleUpdateSubject($oldInfo) {
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel($oldInfo);
+            $model->updateSubject($oldInfo);
+        }
 
         public function handleUpdateLecturer($oldInfo) {
             require_once('./Models/AdminModel.php');
@@ -205,6 +260,12 @@
             require_once('./Models/AdminModel.php');
             $model = new AdminModel($maSV);
             $model->deleteStudent($maSV);
+        }
+        
+        public function handleDeleteSubject($maMH) {
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel($maMH);
+            $model->deleteSubject($maMH);
         }
         
         public function handleDeleteLecturer($maNV) {
