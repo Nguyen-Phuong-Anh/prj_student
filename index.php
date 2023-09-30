@@ -19,11 +19,12 @@
             $controller = new Controller();
             $controller->showHome();
             break;
-        case 'home_student': case '123' : 
+        case 'home_student': case 'profile_student' : case 'subject_student' : case 'point_student' : case 'tuition_student' : 
             require_once('./Controllers/Controller.php');
             $controller = new Controller();
             $controller->showHomeStudent();
             break;
+
         case 'logout':
             require_once('./Controllers/AuthController.php');
             $controller = new AuthController();

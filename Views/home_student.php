@@ -53,20 +53,24 @@
     <hr>
     <ul class='nav nav-pills flex-column mb-auto'>
         <li class='nav-item'>
-          <a href='.?route=student_info' class='nav-link active' aria-current='page'>
-            thong tin sv
+          <a href='.?route=profile_student' class='nav-link active' aria-current='page'>
+            Thông tin sinh viên
+          </a>
+        <li class='nav-item'>
+          <a href='.?route=subject_student' class='nav-link active' aria-current='page'>
+            Đăng kí học phần
           </a>
         </li>
         <li class='nav-item'>
-          <a href='.?route=student_info' class='nav-link active' aria-current='page'>
-            thong tin sv
+          <a href='.?route=point_student' class='nav-link active' aria-current='page'>
+            Điểm
           </a>
-        </li>   
+        </li>
         <li class='nav-item'>
-          <a href='.?route=123' class='nav-link active' aria-current='page'>
+          <a href='.?route=tuition_student' class='nav-link active' aria-current='page'>
             học phí
           </a>
-        </li>
+        </li>   
     </ul>
     <hr>
     <div>
@@ -80,14 +84,35 @@
   <div class="w-50 me-auto ms-auto">
     <?php
         switch ($route) {
-            case '123':
-              case 'student_info':
-                require_once('./Controllers/StudentContriller.php');
-                $controller = new studentController();
-                $controller->showHome123();
-                break;
+          case 'profile_student':
+            require_once('./Controllers/StudentContriller.php');
+            $controller = new studentController();
+            $controller->showProfile_student();
+            break;
+        }
+        switch ($route) {
+          case 'point_student':
+            require_once('./Controllers/StudentContriller.php');
+            $controller = new studentController();
+            $controller->showPoint_student();
+            break;
+        }
+        switch ($route) {
+          case 'tuition_student':
+            require_once('./Controllers/StudentContriller.php');
+            $controller = new studentController();
+            $controller->showTuition_student();
+            break;
+        }
+        switch ($route) {
+          case 'subject_student':
+            require_once('./Controllers/StudentContriller.php');
+            $controller = new studentController();
+            $controller->showsubject_student();
+            break;
         }
     ?>
+    
   </div>
 </body>
 </html>

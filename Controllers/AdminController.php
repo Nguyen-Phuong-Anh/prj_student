@@ -40,6 +40,9 @@
         public function showTuitionInfo() {
             require_once('./Views/admin/student/tuition_info.php');
         }
+         public function showprofile_student() {
+            require_once('./Views/student/profile_student.php');
+        }
 
         public function handleSearchAccount() {
             $search = $_POST['search'];
