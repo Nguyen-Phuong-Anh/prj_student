@@ -24,7 +24,11 @@
             $controller = new Controller();
             $controller->showHomeStudent();
             break;
-
+        case 'home_lecturer': case 'profile_lecturer' :
+             require_once('./Controllers/Controller.php');
+            $controller = new Controller();
+            $controller->showHomeLecturer();
+            break;
         case 'logout':
             require_once('./Controllers/AuthController.php');
             $controller = new AuthController();
