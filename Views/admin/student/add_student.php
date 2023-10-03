@@ -26,8 +26,7 @@
                     $currentYear = intval(date("Y"));
                     echo '<input readonly type="text" class="form-control" name="hocKy" value="Năm học '.$currentYear.' - '.++$currentYear.' - Học kỳ 1" >';
                 ?>
-            </div>
-            <div class="form-group mt-3">
+            </div>  <div class="form-group mt-3">
                 <label class="pb-2" for="hoTen">Họ và Tên</label>
                 <input type="text" class="form-control" name="hoTen" placeholder="Họ và Tên" >
             </div>
@@ -59,6 +58,7 @@
                 <button name="clear" type="submit" class="btn btn-light">Clear</button>
             </div>
         </div>
+          
     </form>
 </div>
 

@@ -3,7 +3,13 @@
     $controller = new AdminController();
     $data = $controller->showKhoa();
 ?>
-
+<?php
+    require_once('./Controllers/StudentController.php');
+    $controller = new studentController(); 
+    $data = $controller->getSubject($_SESSION['username']);
+    // print_r($data);
+?>
+<html><h1>123</h1></html>
 <div>
     <form action="" method="post">
         <div class="form-group mt-3">
@@ -21,7 +27,6 @@
             <button name="search_subject" type="submit" class="btn btn-primary">Đăng ký </button>
         </div>
     </form>
-
     <table class="table mt-4">
         <?php
             if(isset($_POST['search_subject'])) {
@@ -60,3 +65,4 @@
         ?>
     </table>
 </div>
+

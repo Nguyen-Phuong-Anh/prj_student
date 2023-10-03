@@ -58,7 +58,7 @@
           </a>
         <li class='nav-item'>
           <a href='.?route=subject_student' class='nav-link active' aria-current='page'>
-            Đăng kí học phần
+          học phần đã đăng ký
           </a>
         </li>
         <li class='nav-item'>
@@ -85,30 +85,30 @@
     <?php
         switch ($route) {
           case 'profile_student':
-            require_once('./Controllers/StudentContriller.php');
-            $controller = new studentController();
-            $controller->showProfile_student();
+            require_once('./Controllers/StudentController.php');
+            $controller = new StudentController();
+            $controller->showProfileStudent();
             break;
         }
         switch ($route) {
           case 'point_student':
-            require_once('./Controllers/StudentContriller.php');
-            $controller = new studentController();
-            $controller->showPoint_student();
+            require_once('./Controllers/StudentController.php');
+            $controller = new StudentController();
+            $controller->showPointStudent();
             break;
         }
         switch ($route) {
           case 'tuition_student':
-            require_once('./Controllers/StudentContriller.php');
-            $controller = new studentController();
-            $controller->showTuition_student();
+            require_once('./Controllers/StudentController.php');
+            $controller = new StudentController();
+            $controller->showTuitionStudent();
             break;
         }
         switch ($route) {
           case 'subject_student':
-            require_once('./Controllers/StudentContriller.php');
-            $controller = new studentController();
-            $controller->showsubject_student();
+            require_once('./Controllers/StudentController.php');
+            $controller = new StudentController();
+            $controller->showsubjectStudent();
             break;
         }
     ?>

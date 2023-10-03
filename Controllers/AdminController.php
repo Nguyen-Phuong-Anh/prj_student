@@ -40,7 +40,7 @@
         public function showTuitionInfo() {
             require_once('./Views/admin/student/tuition_info.php');
         }
-         public function showprofile_student() {
+         public function showProfileStudent() {
             require_once('./Views/student/profile_student.php');
         }
 
@@ -199,16 +199,16 @@
             return $data;
         }
 
-        public function handleGetStudent() {
-            $maSV = $_GET['param'];
-            require_once('./Models/AdminModel.php');
-            $model = new AdminModel();
-            $data = $model->getStudent($maSV);
-            $khoa = $model->getKhoa();
-            $array = array();
-            $array = [$data, $khoa];
-            return $array;
-        }
+            public function handleGetStudent() {
+                $maSV = $_GET['param'];
+                require_once('./Models/AdminModel.php');
+                $model = new AdminModel();
+                $data = $model->getStudent($maSV);
+                $khoa = $model->getKhoa();
+                $array = array();
+                $array = [$data, $khoa];
+                return $array;
+            }
         
         public function handleGetTuition() {
             $maHphi = $_GET['param'];

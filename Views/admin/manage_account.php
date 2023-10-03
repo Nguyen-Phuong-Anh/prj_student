@@ -30,7 +30,7 @@
                                 <tbody>";
                                 while($row = mysqli_fetch_assoc($data)) {
                                     echo '<tr>';
-                                    echo"<td class='table-cell'>".$index."</td>";
+                                    echo"<td class='ta  ble-cell'>".$index."</td>";
                                     echo"<td class='table-cell'>".$row["tenTaiKhoan"]."</td>";
                                     echo"<td class='table-cell'>".$row["maVaiTro"]."</td>";
                                     echo '<td class="table-cell"> 
@@ -109,4 +109,4 @@
         $controller = new AdminController();
         $controller->handleChangeAccount();
     }
-?>
+?>  
