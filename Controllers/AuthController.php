@@ -41,15 +41,8 @@
                     header("Location: .?route=home_lecturer");
                     exit();
                 }
-                else if($data['maVaiTro'] === '102') {
-                    session_start();
-                    $_SESSION['username'] = $data['tenTaiKhoan'];
-                    $_SESSION['role'] = $data['maVaiTro'];
-                    header("Location: .?route=home_lecturer");
-                    exit();
-                }
             }
-                }
+        }
 
         public function processLogout() {
             session_start();
