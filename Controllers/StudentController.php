@@ -12,6 +12,10 @@
             require_once('./Views/student/subject_student.php');
         }
 
+        public function showRegisterSubject() {
+            require_once('./Views/student/regist_subject.php');
+        }
+
         public function showPointStudent(){
             require_once('./Views/student/point_student.php');
         }
@@ -56,5 +60,26 @@
             return $data;
         }
 
+        public function handleGetHP($maKhoa) {
+            require_once('./Models/StudentModel.php');
+            $model = new StudentModel();
+            $data = $model->getHP($maKhoa);
+            return $data;
+        }
+
+        public function handlGetClass($maHP) {
+            require_once('./Models/StudentModel.php');
+            $model = new StudentModel();
+            $data = $model->getClass($maHP);
+            return $data;
+        }
+
+        public function handleRegistSbj($maSV) {
+            require_once('./Models/StudentModel.php');
+            $model = new StudentModel();
+            $result = $model->AddRegistSubject($maSV, $_POST['hocky_selector'], $_POST['lopDK'], $_POST['hocphanDK']);
+            if($result)
+                $model->AddRegistSubjectInDetail($result, $_POST['hocphanDK'], $_POST['lopDK']);
+        }
     }
 ?>

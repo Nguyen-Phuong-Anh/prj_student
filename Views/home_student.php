@@ -66,7 +66,7 @@
           </button>
           <div class='collapse text-white' id='lecturer-collapse'>
             <ul class='btn-toggle-nav list-unstyled fw-normal pb-1 small'>
-                <li><a href='.?route=registed_sbj' class='nav-link text-white rounded'>Học phần đã đăng ký</a></li>
+                <li><a href='.?route=getRegisted_sbj' class='nav-link text-white rounded'>Học phần đã đăng ký</a></li>
                 <li><a href='.?route=regist_subject' class='nav-link text-white rounded'>Đăng ký</a></li>
             </ul>
           </div>
@@ -110,6 +110,12 @@
             require_once('./Controllers/StudentController.php');
             $controller = new StudentController();
             $controller->showTuitionStudent();
+            break;
+
+          case 'regist_subject':
+            require_once('./Controllers/StudentController.php');
+            $controller = new StudentController();
+            $controller->showRegisterSubject();
             break;
         }
     ?>
