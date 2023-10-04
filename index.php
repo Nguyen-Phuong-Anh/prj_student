@@ -19,10 +19,16 @@
             $controller = new Controller();
             $controller->showHome();
             break;
-        case 'home_student': case 'profile_student' : case 'subject_student' : case 'point_student' : case 'tuition_student' : 
+        case 'home_student': case 'subject_student' : case 'point_student' : case 'tuition_student' : 
             require_once('./Controllers/Controller.php');
             $controller = new Controller();
             $controller->showHomeStudent();
+            break;
+
+        case 'home_lecturer': case 'point_student':
+            require_once('./Controllers/Controller.php');
+            $controller = new Controller();
+            $controller->showHomeLecturer();
             break;
 
         case 'logout':

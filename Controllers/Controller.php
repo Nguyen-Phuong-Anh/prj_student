@@ -11,5 +11,9 @@
         public function showHomeStudent() {
             require_once('./Views/home_student.php');
         }
+
+        public function showHomeLecturer() {
+            require_once('./Views/home_lecturer.php');
+        }
     }
 ?>

@@ -34,6 +34,12 @@
                     $_SESSION['role'] = $data['maVaiTro'];
                     header("Location: .?route=home_student");
                     exit();
+                } else {
+                    session_start();
+                    $_SESSION['username'] = $data['tenTaiKhoan'];
+                    $_SESSION['role'] = $data['maVaiTro'];
+                    header("Location: .?route=home_lecturer");
+                    exit();
                 }
             }
         }
