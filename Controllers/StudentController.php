@@ -43,5 +43,18 @@
             $data = $model->getPoint($maBD);
             return $data;
         }
+
+        public function getStudentTuition($maSV, $khoa) {
+            require_once('./Models/StudentModel.php');
+            $model = new StudentModel();
+            $data1 = $model->getMaHocPhi($maSV, $khoa);
+            $maHP;
+            while($row = mysqli_fetch_assoc($data1)) {
+                $maHP = $row['maHocPhi'];
+            }
+            $data = $model->getTuition($maHP);
+            return $data;
+        }
+
     }
 ?>

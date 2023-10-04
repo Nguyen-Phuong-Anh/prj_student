@@ -60,5 +60,41 @@
             return $resultData;
         }
         
+        public function getMaHocPhi($maSV, $khoa) {
+            require('./Config/DBConn.php');
+            $sql = "SELECT maHocPhi FROM hocphi WHERE maSinhVien= ? AND hocKy= ?;";
+            $stmt = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, "ss", $maSV, $khoa);
+            mysqli_stmt_execute($stmt);
+
+            $resultData = mysqli_stmt_get_result($stmt);
+            return $resultData;
+        }
+
+        public function getTuition($maHP) {
+            require('./Config/DBConn.php');
+            $sql = "SELECT * FROM chitiethocphi WHERE maHocPhi= ?;";
+            $stmt = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, "s", $maHP);
+            mysqli_stmt_execute($stmt);
+
+            $resultData = mysqli_stmt_get_result($stmt);
+            mysqli_stmt_close($stmt);
+            $conn->close();
+
+            return $resultData;
+        }
     }
 ?>

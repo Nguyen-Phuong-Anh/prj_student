@@ -57,7 +57,6 @@
           <a href='.?route=home_student' class='nav-link active' aria-current='page'>
             Trang chủ
           </a>
-<<<<<<< HEAD
         <li class='mb-1'>
           <button class='btn btn-toggle text-white align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#lecturer-collapse' aria-expanded='false'>
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person-vcard-fill" viewBox="0 0 20 20">
@@ -71,12 +70,6 @@
                 <li><a href='.?route=regist_subject' class='nav-link text-white rounded'>Đăng ký</a></li>
             </ul>
           </div>
-=======
-        <li class='nav-item'>
-          <a href='.?route=subject_student' class='nav-link active' aria-current='page'>
-          học phần đã đăng ký
-          </a>
->>>>>>> 7d7b2240323f1260faaa1dca9b86c1434fbeb950
         </li>
         <li class='nav-item'>
           <a href='.?route=point_student' class='nav-link text-white rounded' aria-current='page'>
@@ -101,36 +94,22 @@
   <div class="w-50 me-auto ms-auto">
     <?php
         switch ($route) {
-<<<<<<< HEAD
           case 'home_student':
-=======
-          case 'profile_student':
->>>>>>> 7d7b2240323f1260faaa1dca9b86c1434fbeb950
             require_once('./Controllers/StudentController.php');
             $controller = new StudentController();
             $controller->showProfileStudent();
             break;
+
           case 'point_student':
             require_once('./Controllers/StudentController.php');
             $controller = new StudentController();
             $controller->showPointStudent();
-<<<<<<< HEAD
-=======
             break;
-        }
-        switch ($route) {
+        
           case 'tuition_student':
             require_once('./Controllers/StudentController.php');
             $controller = new StudentController();
             $controller->showTuitionStudent();
-            break;
-        }
-        switch ($route) {
-          case 'subject_student':
-            require_once('./Controllers/StudentController.php');
-            $controller = new StudentController();
-            $controller->showsubjectStudent();
->>>>>>> 7d7b2240323f1260faaa1dca9b86c1434fbeb950
             break;
         }
     ?>
