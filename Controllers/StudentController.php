@@ -44,8 +44,10 @@
             while($row = mysqli_fetch_assoc($data1)) {
                 $maBD = $row['maBangDiem'];
             }
-            $data = $model->getPoint($maBD);
-            return $data;
+            if(isset($maBD)) {
+                $data = $model->getPoint($maBD);
+                return $data;
+            }
         }
 
         public function getStudentTuition($maSV, $khoa) {
@@ -56,8 +58,10 @@
             while($row = mysqli_fetch_assoc($data1)) {
                 $maHP = $row['maHocPhi'];
             }
-            $data = $model->getTuition($maHP);
-            return $data;
+            if(isset($maHP)) {
+                $data = $model->getTuition($maHP);
+                return $data;
+            }
         }
 
         public function handleGetHP($maKhoa) {
@@ -74,12 +78,18 @@
             return $data;
         }
 
-        public function handleRegistSbj($maSV) {
+        public function handleRegistSbj($maSV, $maKhoa) {
             require_once('./Models/StudentModel.php');
             $model = new StudentModel();
             $result = $model->AddRegistSubject($maSV, $_POST['hocky_selector'], $_POST['lopDK'], $_POST['hocphanDK']);
-            if($result)
+            if($result) {
                 $model->AddRegistSubjectInDetail($result, $_POST['hocphanDK'], $_POST['lopDK']);
+                //them vao hoc phi
+                $maHPhi = $model->AddInTuition($maSV, $maKhoa, $_POST['hocky_selector']);
+                if(isset($maHPhi)) {
+                    $model->AddInDetailTuition($maHPhi, $_POST['hocphanDK']);
+                }                 
+            }
         }
     }
 ?>

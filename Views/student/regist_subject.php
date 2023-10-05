@@ -15,7 +15,9 @@
                     for($a = 1; $a < 2; $a++) {
                         $year = $currentYear + 1;
                         echo '<option value="Năm học '.$currentYear.' - '.$year.' - Học kỳ 1'.$b.'">Năm học '.$currentYear.' - '.$year.' - Học kỳ 1</option>';
-                        echo '<option value="Năm học '.$currentYear.' - '.$year.' - Học kỳ 2'.$b.'">Năm học '.$currentYear.' - '.$year.' - Học kỳ 2</option>';
+                        if(!stripos($array[0][0]['hocKyHienTai'], "Học kỳ 1")) {
+                            echo '<option value="Năm học '.$currentYear.' - '.$year.' - Học kỳ 2'.$b.'">Năm học '.$currentYear.' - '.$year.' - Học kỳ 2</option>';
+                        }
                     }
                 ?>
             </select>
@@ -85,7 +87,8 @@
                     echo "<thead>
                     <tr>
                         <th>#</th>
-                        <th>Mã lớp</th>
+                        <th>Tên lớp</th>
+                        <th>Mã học phần</th>
                         <th>Sĩ số</th>
                         <th>Sĩ số tối đa</th>
                         <th>Thời gian</th>
@@ -97,6 +100,7 @@
                         echo '<tr>';
                         echo"<td class='table-cell'>".$index."</td>";
                         echo"<td class='table-cell'>".$row[0]["tenLop"]."</td>";
+                        echo"<td class='table-cell'>".$row[0]["maHocPhan"]."</td>";
                         echo"<td class='table-cell'>".$row[0]["siSo"]."</td>";
                         echo"<td class='table-cell'>".$row[0]["siSoToiDa"]."</td>";
                         echo"<td class='table-cell'>".$row[0]["thoiGian"]."</td>";
@@ -121,7 +125,7 @@
         require_once('./Controllers/StudentController.php');
         $controller = new StudentController();
         if(isset($_POST['hocky_selector']) && isset($_POST['hocphanDK']) && isset($_POST['lopDK'])) {
-            $controller->handleRegistSbj($array[0][0]['maSinhVien']);
+            $controller->handleRegistSbj($array[0][0]['maSinhVien'], $array[0][0]['maKhoa']);
         } else 
             echo '<script>alert("Please fill all the information")</script>';
     }
