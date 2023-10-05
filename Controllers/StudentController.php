@@ -16,6 +16,10 @@
             require_once('./Views/student/regist_subject.php');
         }
 
+        public function showStudentSubject() {
+            require_once('./Views/student/subject_student.php');
+        }
+
         public function showPointStudent(){
             require_once('./Views/student/point_student.php');
         }
@@ -90,6 +94,13 @@
                     $model->AddInDetailTuition($maHPhi, $_POST['hocphanDK']);
                 }                 
             }
+        }
+
+        public function handleGetStudentSbj($maSV, $khoa) {
+            require_once('./Models/StudentModel.php');
+            $model = new StudentModel();
+            $data = $model->getSubject($maSV, $_POST['hocky_selector']);
+            return $data;
         }
     }
 ?>

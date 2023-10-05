@@ -358,5 +358,66 @@
                 echo '<script>alert("Failed to add subject")</script>';
             }
         }
+
+        public function getSubject($maSV, $hocKy) {
+            require('./Config/DBConn.php');
+
+            $sql = "SELECT * FROM hocphandk WHERE maSinhVien= ? AND hocKy= ?;";
+            $stmt = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, "ss", $maSV, $hocKy);
+            mysqli_stmt_execute($stmt);
+            
+            $data = mysqli_stmt_get_result($stmt);
+            $maDSDK;
+            while($row = mysqli_fetch_assoc($data)) {
+                $maDSDK = $row['maDSDK'];
+            }
+
+            if(isset($maDSDK)) {
+                $sql = "SELECT * FROM chitiethocphandk WHERE maDSDK= ?;";
+
+                if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                    header("Location: ./");
+                    exit();
+                }
+
+                mysqli_stmt_bind_param($stmt, "s", $maDSDK);
+                mysqli_stmt_execute($stmt);
+                
+                $data1 = mysqli_stmt_get_result($stmt);
+                $arr = array();
+                while($row = mysqli_fetch_assoc($data1)) {
+                    $arr[] = $row;
+                }
+
+                $sql = "SELECT * FROM hocphan WHERE maHocPhan= ?;";
+
+                if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                    header("Location: ./");
+                    exit();
+                }
+                $array = array();
+                foreach($arr as $row) {
+                    mysqli_stmt_bind_param($stmt, "s", $row['maHocPhan']);
+                    mysqli_stmt_execute($stmt);
+                    
+                    $data1 = mysqli_stmt_get_result($stmt);
+                    while($row = mysqli_fetch_assoc($data1)) {
+                        $array[] = $row;
+                    }
+                }
+            }
+            
+            mysqli_stmt_close($stmt);
+
+            $conn->close();
+            return $array;
+        }
     }
 ?>
