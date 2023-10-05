@@ -60,6 +60,7 @@
             </svg>
             Trang chủ
           </a>
+        </li>
         <li class='mb-1'>
           <button class='btn btn-toggle text-white align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#lecturer-collapse' aria-expanded='false'>
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-vector-pen" viewBox="0 0 20 20">

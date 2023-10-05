@@ -102,5 +102,11 @@
             $data = $model->getSubject($maSV, $_POST['hocky_selector']);
             return $data;
         }
+
+        public function handleUpdateStudent($oldInfo) {
+            require_once('./Models/StudentModel.php');
+            $model = new StudentModel($oldInfo);
+            $model->updateStudent($oldInfo);
+        }
     }
 ?>

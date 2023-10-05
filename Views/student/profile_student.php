@@ -110,32 +110,6 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <div class="form-group mt-2">
-                    <label class="pb-2" for="nienKhoa">Niên khóa</label>
-                    <input type="text" class="form-control" name="nienKhoa" value="<?php echo $array[0][0]['khoa']; ?>" >
-                </div>
-                <div class="form-group mt-2">
-                    <label class="pb-2" for="khoa_selector">Khoa</label>
-                    <select name="khoa_selector" class="form-select" aria-label="Default select example">
-                        <option selected>Khoa</option>
-                        <?php
-                            foreach ($array[1] as $row) {
-                                if($row['maKhoa'] == $array[0][0]['maKhoa']) {
-                                    echo '<option selected="selected" value="'.$row['maKhoa'].'">'.$row['tenKhoa'].'</option>';
-
-                                } else {
-                                    echo '<option value="'.$row['maKhoa'].'">'.$row['tenKhoa'].'</option>';
-                                }
-                            }
-                        ?>
-                    </select>
-                </div>
-                <div class="form-group mt-2">
-                    <label class="pb-2" for="hocKy">Học kỳ hiện tại</label>
-                    <input type="text" class="form-control" name="hocKy" value="<?php echo $array[0][0]['hocKyHienTai']; ?>" placeholder="<?php echo 'VD: ' . $array[0][0]['hocKyHienTai']; ?>">
-                </div>
-            </div>
             <div class="form-group mt-4">
                 <button name="change_stdInfo" type="submit" class="btn btn-primary">Lưu thay đổi</button>
             </div>
@@ -147,8 +121,8 @@
 
 <?php
     if(isset($_POST['change_stdInfo'])) {
-        require_once('./Controllers/AdminController.php');
-        $controller = new AdminController();
+        require_once('./Controllers/StudentController.php');
+        $controller = new StudentController();
         $controller->handleUpdateStudent($array[0]);
     }
 ?>

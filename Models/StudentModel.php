@@ -23,6 +23,43 @@
             return $rows;
         }
 
+        public function updateStudent($oldInfo) {
+            require('./Config/DBConn.php');
+            $updateHoten = isset($_POST['hoTen']) ? $_POST['hoTen'] : $oldInfo[0]['hoTen'];
+            $updateNgaySinh = isset($_POST['ngaySinh']) ? $_POST['ngaySinh'] : $oldInfo[0]['ngaySinh'];
+            $updateGioiTinh = isset($_POST['gioiTinh']) ? $_POST['gioiTinh'] : $oldInfo[0]['gioiTinh'];
+            $updateDiaChi = isset($_POST['diaChi']) ? $_POST['diaChi'] : $oldInfo[0]['diaChi'];
+            $updateEmail = isset($_POST['email']) ? $_POST['email'] : $oldInfo[0]['email'];
+            $updateTel = isset($_POST['tel']) ? $_POST['tel'] : $oldInfo[0]['soDienThoai'];
+
+            $sql = "UPDATE sinhvien 
+            SET hoTen = ?, ngaySinh = ?, gioiTinh = ?, diaChi = ?, email = ?, soDienThoai = ?
+            WHERE maSinhVien = ?";
+            
+            $stmt = mysqli_stmt_init($conn);
+            $maSinhVien = $oldInfo[0]['maSinhVien'];
+            
+            if (mysqli_stmt_prepare($stmt, $sql)) {
+                mysqli_stmt_bind_param($stmt, "sssssss",  $updateHoten, $updateNgaySinh, $updateGioiTinh, $updateDiaChi, $updateEmail, $updateTel, $maSinhVien);
+
+                if (mysqli_stmt_execute($stmt)) {
+                    echo '<script>alert("Update successfully!")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=home_student';
+                    </script>";
+                } else {
+                    echo '<script>alert("Update failed!")</script>';
+                }
+
+                mysqli_stmt_close($stmt);
+            } else {
+                header("Location: ./");
+                exit();
+            }
+            
+            $conn->close();
+        }
+
         public function getMaBangDiem($maSV, $khoa) {
             require('./Config/DBConn.php');
             $sql = "SELECT maBangDiem FROM bangdiem WHERE maSinhVien= ? AND hocKy= ?;";
