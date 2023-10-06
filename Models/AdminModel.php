@@ -26,7 +26,7 @@
             require_once('./Hooks/AdminHooks.php');
             
             //check duplicate
-            if(!checkAccountDuplicate($username, $conn)) { 
+            if(checkAccountDuplicate($username, $conn)) { 
                 // add
                 $sql = "INSERT INTO taikhoan (tenTaiKhoan, matKhau, maVaiTro) VALUES (?, ?, ?);";
                 $stmt = mysqli_stmt_init($conn);
@@ -130,7 +130,7 @@
             require_once('./Hooks/AdminHooks.php');
 
             //check duplicate
-            if(!checkStudentDuplicate($maSV, $conn)) { 
+            if(checkStudentDuplicate($maSV, $conn)) { 
                 // add
                 $sql = "INSERT INTO sinhvien (tenTaiKhoan, maSinhVien, maKhoa, khoa, hocKyHienTai, hoTen, ngaySinh, gioiTinh, diaChi, email, soDienThoai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
                 $stmt = mysqli_stmt_init($conn);
@@ -165,7 +165,7 @@
             require_once('./Hooks/AdminHooks.php');
 
             //check duplicate
-            if(!checkStudentDuplicate($maNV, $conn)) { 
+            if(checkLecturerDuplicate($maNV, $conn)) { 
                 // add
                 $sql = "INSERT INTO giangvien (tenTaiKhoan, maNhanVien, maKhoa, hoTen, ngaySinh, gioiTinh, diaChi, chucVu, email, soDienThoai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
                 $stmt = mysqli_stmt_init($conn);
@@ -198,7 +198,7 @@
             require('./Config/DBConn.php');
             require_once('./Hooks/AdminHooks.php');
 
-            if(!checkSubjectDuplicate($maHocPhan, $conn)) {
+            if(checkSubjectDuplicate($maHocPhan, $conn)) {
                 $sql = "INSERT INTO hocphan (maHocPhan, maKhoa, tenMonHoc, soTinChi, batBuoc, hocPhiMotTin) VALUES (?, ?, ?, ?, ?, ?);";
                 
                 $stmt = mysqli_stmt_init($conn);
@@ -571,6 +571,7 @@
 
         public function deleteStudent($maSV) {
             require('./Config/DBConn.php');
+            require_once('./Hooks/AdminHooks.php');
 
             $sql = "DELETE FROM sinhvien WHERE maSinhVien= ?;";
             $stmt = mysqli_stmt_init($conn);
@@ -583,6 +584,10 @@
             mysqli_stmt_bind_param($stmt, "s", $maSV);
 
             if (mysqli_stmt_execute($stmt)) {
+                deleteAccount($maSV, $conn);
+                deleteStudentDiem($maSV, $conn);
+                deleteStudentHphi($maSV, $conn);
+                deleteStudentHPhan($maSV, $conn);
                 echo '<script>alert("Delete successful!")</script>';
                 echo "<script>
                 window.location = 'http://localhost/prj_student/?route=student_list';
@@ -597,6 +602,7 @@
 
         public function deleteLecturer($maNV) {
             require('./Config/DBConn.php');
+            require_once('./Hooks/AdminHooks.php');
 
             $sql = "DELETE FROM giangvien WHERE maNhanVien= ?;";
             $stmt = mysqli_stmt_init($conn);
@@ -609,6 +615,8 @@
             mysqli_stmt_bind_param($stmt, "s", $maNV);
 
             if (mysqli_stmt_execute($stmt)) {
+                deleteAccount($maNV, $conn);
+                removeLecturerFromClass($maNV, $conn);
                 echo '<script>alert("Delete successful!")</script>';
                 echo "<script>
                 window.location = 'http://localhost/prj_student/?route=lecturer_list';
@@ -623,7 +631,9 @@
         
         public function deleteSubject($maMH) {
             require('./Config/DBConn.php');
+            require_once('./Hooks/AdminHooks.php');
 
+            $thanhTien = getHPhiTin($maMH, $conn);
             $sql = "DELETE FROM hocphan WHERE maHocPhan= ?;";
             $stmt = mysqli_stmt_init($conn);
 
@@ -635,7 +645,7 @@
             mysqli_stmt_bind_param($stmt, "s", $maMH);
 
             if (mysqli_stmt_execute($stmt)) {
-                $sql1 = "DELETE FROM chitiethocphi WHERE maHocPhan= ?;";
+                $sql1 = "DELETE FROM chitiethocphandk WHERE maHocPhan= ?;";
                 if(!mysqli_stmt_prepare($stmt, $sql1)) { 
                     echo '<script>alert("Delete failed!")</script>';
                 } else {
@@ -643,6 +653,10 @@
                     if (!mysqli_stmt_execute($stmt)) {
                         echo '<script>alert("Delete failed!")</script>';
                     } else {
+                        //hook
+                        removeSbjFromCTHP($maMH, $thanhTien, $conn);
+                        removeSbjFromClass($maMH, $conn);
+                        removeSbjFromCTBD($maMH, $conn);
                         echo '<script>alert("Delete successful!")</script>';
                         echo "<script>
                         window.location = 'http://localhost/prj_student/?route=subject_list';

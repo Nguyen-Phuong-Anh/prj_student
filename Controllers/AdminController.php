@@ -56,14 +56,15 @@
             if(!$_POST['username'] || !$_POST['password'] || !$_POST['role']) {
                 echo '<script>alert("Please fill all the information")</script>';
                 header("Location: ./");
+            } else {
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+                $role = $_POST['role'];
+    
+                require_once('./Models/AdminModel.php');
+                $model = new AdminModel();
+                $model->addAccount($username, $password, $role);
             }
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $role = $_POST['role'];
-
-            require_once('./Models/AdminModel.php');
-            $model = new AdminModel();
-            $model->addAccount($username, $password, $role);
         }
 
         public function handleChangeAccount() {
@@ -87,59 +88,62 @@
             if(!$_POST['maSV'] || !$_POST['khoa_selector'] || !$_POST['hoTen'] || !$_POST['ngaySinh'] || !$_POST['gioiTinh'] || !$_POST['diaChi']) {
                 echo '<script>alert("Please fill all the information")</script>';
                 header("Location: ./");
+            } else {
+                $maSV = $_POST['maSV'];
+                $khoa = $_POST['khoa_selector'];
+                $hocKy = $_POST['hocKy'];
+                $hoTen = $_POST['hoTen'];
+                $ngaySinh = $_POST['ngaySinh'];
+                $gioiTinh = $_POST['gioiTinh'];
+                $diaChi = $_POST['diaChi'];
+                $email = $_POST['email'];
+                $tel = $_POST['tel'];
+    
+                require_once('./Models/AdminModel.php');
+                $model = new AdminModel();
+                $model->addStudent($maSV, $khoa, $hocKy, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $email, $tel);
+                $model->addAccount($maSV, $maSV, '103');
             }
-            $maSV = $_POST['maSV'];
-            $khoa = $_POST['khoa_selector'];
-            $hocKy = $_POST['hocKy'];
-            $hoTen = $_POST['hoTen'];
-            $ngaySinh = $_POST['ngaySinh'];
-            $gioiTinh = $_POST['gioiTinh'];
-            $diaChi = $_POST['diaChi'];
-            $email = $_POST['email'];
-            $tel = $_POST['tel'];
-
-            require_once('./Models/AdminModel.php');
-            $model = new AdminModel();
-            $model->addStudent($maSV, $khoa, $hocKy, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $email, $tel);
-            $model->addAccount($maSV, $maSV, '103');
         }
 
         public function handleAddLecturer() {
             if(!$_POST['maNV'] || !$_POST['khoa_selector'] || !$_POST['hoTen'] || !$_POST['ngaySinh'] || !$_POST['gioiTinh'] || !$_POST['diaChi']) {
                 echo '<script>alert("Please fill all the information")</script>';
                 header("Location: ./");
+            } else {
+                $maNV = $_POST['maNV'];
+                $khoa = $_POST['khoa_selector'];
+                $hoTen = $_POST['hoTen'];
+                $ngaySinh = $_POST['ngaySinh'];
+                $gioiTinh = $_POST['gioiTinh'];
+                $diaChi = $_POST['diaChi'];
+                $chucVu = $_POST['chucVu'];
+                $email = $_POST['email'];
+                $tel = $_POST['tel'];
+    
+                require_once('./Models/AdminModel.php');
+                $model = new AdminModel();
+                $model->addLecturer($maNV, $khoa, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $chucVu, $email, $tel);
+                $model->addAccount($maNV, $maNV, '102');
             }
-            $maNV = $_POST['maNV'];
-            $khoa = $_POST['khoa_selector'];
-            $hoTen = $_POST['hoTen'];
-            $ngaySinh = $_POST['ngaySinh'];
-            $gioiTinh = $_POST['gioiTinh'];
-            $diaChi = $_POST['diaChi'];
-            $chucVu = $_POST['chucVu'];
-            $email = $_POST['email'];
-            $tel = $_POST['tel'];
-
-            require_once('./Models/AdminModel.php');
-            $model = new AdminModel();
-            $model->addLecturer($maNV, $khoa, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $chucVu, $email, $tel);
-            $model->addAccount($maNV, $maNV, '102');
         }
 
         public function handleAddSubject() {
             if(!$_POST['maHocPhan'] || !$_POST['khoa_selector'] || !$_POST['tenMonHoc'] || !$_POST['soTinChi'] || !$_POST['hocPhiMotTin']) {
                 echo '<script>alert("Please fill all the information")</script>';
                 header("Location: ./");
+            } else {
+                $maHocPhan = $_POST['maHocPhan'];
+                $khoa = $_POST['khoa_selector'];
+                $tenMonHoc = $_POST['tenMonHoc'];
+                $soTinChi = $_POST['soTinChi'];
+                $batBuoc = $_POST['batBuoc'];
+                $hocPhiMotTin = $_POST['hocPhiMotTin'];
+    
+                require_once('./Models/AdminModel.php');
+                $model = new AdminModel();
+                $model->addSubject($maHocPhan, $khoa, $tenMonHoc, $soTinChi, $batBuoc, $hocPhiMotTin);
             }
-            $maHocPhan = $_POST['maHocPhan'];
-            $khoa = $_POST['khoa_selector'];
-            $tenMonHoc = $_POST['tenMonHoc'];
-            $soTinChi = $_POST['soTinChi'];
-            $batBuoc = $_POST['batBuoc'];
-            $hocPhiMotTin = $_POST['hocPhiMotTin'];
-
-            require_once('./Models/AdminModel.php');
-            $model = new AdminModel();
-            $model->addSubject($maHocPhan, $khoa, $tenMonHoc, $soTinChi, $batBuoc, $hocPhiMotTin);
         }
 
         //search
