@@ -11,6 +11,14 @@
         public function showStudentPoint() {
             require_once('./Views/lecturer/point_student.php');
         }
+        
+        public function showStudentAddPoint() {
+            require_once('./Views/lecturer/addPoint_student.php');
+        }
+        
+        public function showAddPoint() {
+            require_once('./Views/lecturer/std_Point.php');
+        }
 
         public function getLecturerInfo($maNV) {
             require_once('./Models/AdminModel.php');
@@ -73,5 +81,21 @@
             $model = new LecturerModel();
             $model->updatePoint();
         }
+
+        public function handleAddPoint() {
+            $maSV = $_GET['maSV'];
+            $hocKy = $_POST['hocKy'];
+            require_once('./Models/LecturerModel.php');
+            $model = new LecturerModel();
+            $model->addPoint($maSV, $hocKy);
+        }
+
+        public function handleGetHPName($maHP) {
+            require_once('./Models/LecturerModel.php');
+            $model = new LecturerModel();
+            $data = $model->getHPName($maHP);
+            return $data;
+        }
+
     }
 ?>

@@ -96,7 +96,7 @@
             }
         }
 
-        public function handleGetStudentSbj($maSV, $khoa) {
+        public function handleGetStudentSbj($maSV) {
             require_once('./Models/StudentModel.php');
             $model = new StudentModel();
             $data = $model->getSubject($maSV, $_POST['hocky_selector']);

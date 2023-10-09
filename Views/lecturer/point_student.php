@@ -28,7 +28,7 @@
                 require_once('./Controllers/LecturerController.php');
                 $controller = new LecturerController();
                 $data = $controller->handleGetPoint();
-                $maBD = $data[0];
+                if(isset($data[0])) $maBD = $data[0];
                 if(isset($data)) {
                     $index = 0;
                     echo '<h3>Bảng điểm</h3>';
@@ -74,19 +74,19 @@
                                         <form action="" method="post">
                                             <div class="modal-body">
                                                 <input type="hidden" value="'.$maBD.'" name="maBD" >
-                                                <label class="pb-2" for="username">Mã học phần</label>
+                                                <label class="pb-2" for="maHocPhan">Mã học phần</label>
                                                 <input type="text" class="form-control w-50" name="maHocPhan" readonly value="'.$row["maHocPhan"].'">
-                                                <label class="pb-2" for="username">Điểm chuyên cần</label>
+                                                <label class="pb-2" for="diemCC">Điểm chuyên cần</label>
                                                 <input type="number" class="form-control w-50" name="diemCC" value="'.$row["diemCC"].'">
-                                                <label class="pb-2" for="username">Điểm thực hành</label>
+                                                <label class="pb-2" for="diemTH">Điểm thực hành</label>
                                                 <input type="number" class="form-control w-50" name="diemTH" value="'.$row["diemTH"].'">
-                                                <label class="pb-2" for="username">Điểm thảo luận</label>
+                                                <label class="pb-2" for="diemTL">Điểm thảo luận</label>
                                                 <input type="number" class="form-control w-50" name="diemTL" value="'.$row["diemTL"].'">
-                                                <label class="pb-2" for="username">Điểm kết thúc</label>
+                                                <label class="pb-2" for="diemKetThuc">Điểm kết thúc</label>
                                                 <input type="number" class="form-control w-50" name="diemKetThuc" value="'.$row["diemKetThuc"].'">
-                                                <label class="pb-2" for="username">Điểm tổng kết</label>
+                                                <label class="pb-2" for="diemTongKet">Điểm tổng kết</label>
                                                 <input type="number" class="form-control w-50" name="diemTongKet" readonly value="'.$row["diemTongKet"].'">
-                                                <label class="pb-2" for="username">Điểm chữ</label>
+                                                <label class="pb-2" for="diemChu">Điểm chữ</label>
                                                 <input type="text" class="form-control w-50" name="diemChu" readonly value="'.$row["diemChu"].'">
                                             </div>
                                             <div class="modal-footer">

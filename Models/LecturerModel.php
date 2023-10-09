@@ -149,5 +149,99 @@
             
             $conn->close();
         }
+
+        public function getHPName($maHP) {
+            require('./Config/DBConn.php');
+
+            $sql = "SELECT tenMonHoc FROM hocphan WHERE maHocPhan= ?;";
+            $stmt = mysqli_stmt_init($conn); 
+
+            if(!mysqli_stmt_prepare($stmt, $sql)) {
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, "s",$maHP); //
+            
+            mysqli_stmt_execute($stmt);
+
+            $resultData = mysqli_stmt_get_result($stmt);
+            while ($row = mysqli_fetch_assoc($resultData)) {
+                if(isset($row['tenMonHoc'])) {
+                    return $row['tenMonHoc'];
+                }
+            }
+        }
+
+        public function addPoint($maSV, $hocKy) {
+            require_once('./Config/DBConn.php');
+            require_once('./Hooks/LecturerHooks.php');
+
+            if(checkExistMaBD($maSV, $hocKy, $conn) === FALSE) {
+                $sql = "INSERT INTO bangdiem (maSinhVien, hocKy) VALUES (?, ?);";
+                $stmt = mysqli_stmt_init($conn);
+                
+
+                if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                    header("Location: ./");
+                    exit();
+                }
+
+                mysqli_stmt_bind_param($stmt, "ss", $maSV, $hocKy);
+
+                if(mysqli_stmt_execute($stmt)) {
+                    
+                } 
+                mysqli_stmt_close($stmt);
+            }
+
+            $sql = "SELECT maBangDiem FROM bangdiem WHERE maSinhVien= ? AND hocKy= ?;";
+            $stmt1 = mysqli_stmt_init($conn);
+            
+            if(!mysqli_stmt_prepare($stmt1, $sql)) { 
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt1, "ss", $maSV, $khoa);
+            mysqli_stmt_execute($stmt1);
+
+            $resultData = mysqli_stmt_get_result($stmt1);
+            $maBD;
+            while($row = mysqli_fetch_assoc($resultData)) {
+                $maBD = $row['maBangDiem'];
+                break;
+            }
+            $maHocPhan = isset($_POST['hocPhan_selector']) ? $_POST['hocPhan_selector'] : 0;
+            $diemCC = isset($_POST['diemCC']) ? floatval($_POST['diemCC']) : 0;
+            $diemTH = isset($_POST['diemTH']) ? floatval($_POST['diemTH']) : 0;
+            $diemTL = isset($_POST['diemTL']) ? floatval($_POST['diemTL']) : 0;
+            $diemKetThuc = isset($_POST['diemKetThuc']) ? floatval($_POST['diemKetThuc']) : 0;
+            
+            $sql = "INSERT INTO chitietbangdiem 
+            (maHocPhan, diemCC, diemTH, diemTL, diemKetThuc) VALUES (?, ?, ?, ?, ?)";
+            
+            $stmt = mysqli_stmt_init($conn);
+            
+            if (mysqli_stmt_prepare($stmt, $sql)) {
+                mysqli_stmt_bind_param($stmt, "sddddds", $maHocPhan, $diemCC, $diemTH, $diemTL, $diemKetThuc);
+
+                if (mysqli_stmt_execute($stmt)) {
+                    echo '<script>alert("Add student point successfully!")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=getStudent_info';
+                    </script>";
+                } else {
+                    echo '<script>alert("Add student point failed!")</script>';
+                }
+
+                mysqli_stmt_close($stmt);
+            } else {
+                header("Location: ./");
+                exit();
+            }
+            
+            $conn->close();
+        }
     }
 ?>

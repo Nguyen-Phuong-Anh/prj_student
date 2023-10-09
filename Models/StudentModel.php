@@ -61,7 +61,7 @@
         }
 
         public function getMaBangDiem($maSV, $khoa) {
-            require('./Config/DBConn.php');
+            require_once('./Config/DBConn.php');
             $sql = "SELECT maBangDiem FROM bangdiem WHERE maSinhVien= ? AND hocKy= ?;";
             $stmt = mysqli_stmt_init($conn);
 
@@ -415,6 +415,8 @@
             while($row = mysqli_fetch_assoc($data)) {
                 $maDSDK = $row['maDSDK'];
             }
+            
+            $array = array();
 
             if(isset($maDSDK)) {
                 $sql = "SELECT * FROM chitiethocphandk WHERE maDSDK= ?;";
@@ -439,7 +441,6 @@
                     header("Location: ./");
                     exit();
                 }
-                $array = array();
                 foreach($arr as $row) {
                     mysqli_stmt_bind_param($stmt, "s", $row['maHocPhan']);
                     mysqli_stmt_execute($stmt);

@@ -25,7 +25,7 @@
             $controller->showHomeStudent();
             break;
 
-        case 'home_lecturer': case 'student_point': case 'getStudent_info':
+        case 'home_lecturer': case 'student_point': case 'getStudent_info': case 'add_stdPoint': case 'std_Point':
             require_once('./Controllers/Controller.php');
             $controller = new Controller();
             $controller->showHomeLecturer();
