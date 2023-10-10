@@ -4,7 +4,15 @@
     $array = $controller->getLecturerInfo($_SESSION['username']);
 ?>
 
-<div class="mt-4">
+<style>
+    .insideBody {
+        height: 100%;
+        width: 80%;
+        padding-right: 20px;
+    }
+</style>
+
+<div class="mt-4 insideBody">
     <h2>Tìm kiếm sinh viên</h2>
     <form action="" method="post">
         <div class="form-group mt-2">
@@ -25,9 +33,8 @@
         </div>
         <button name="search_std" type="submit" class="btn btn-primary">Tìm kiếm</button>
     </form>
-</div>
 
-<?php
+    <?php
     if(isset($_POST['search_std'])) {
         require_once('./Controllers/LecturerController.php');
         $controller = new LecturerController();
@@ -68,4 +75,5 @@
             echo '</table>';
         }
     }
-?>
+    ?>
+</div>

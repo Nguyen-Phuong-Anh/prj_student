@@ -4,7 +4,15 @@
     $array = $controller->getStudentInfo($_SESSION['username']);
 ?>
 
-<div class="mt-4">
+<style>
+    .insideBody {
+        height: 100%;
+        width: 80%;
+        padding-right: 20px;
+    }
+</style>
+
+<div class="mt-4 insideBody">
     <h2>Đăng ký học phần</h2>
     <form action="" method="post">
         <div class="form-group mt-2">

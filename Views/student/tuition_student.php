@@ -4,7 +4,15 @@
     $array = $controller->getStudentInfo($_SESSION['username']);
 ?>
 
-<div>
+<style>
+    .insideBody {
+        height: 100%;
+        width: 80%;
+        padding-right: 20px;
+    }
+</style>
+
+<div class="insideBody">
     <form action="" method="post">
         <div class="form-group mt-2">
             <label class="pb-2" for="hocky_selector">Học kỳ</label>
@@ -25,43 +33,43 @@
         </div>
         <button type="submit" name="search_tuition" class="btn btn-primary mt-4 mb-4">Tìm kiếm</button>
     </form>
-</div>
-
-<?php
-    if(isset($_POST['search_tuition'])) {
-        $khoa = $_POST['hocky_selector'];
-        require_once('./Controllers/StudentController.php');
-        $controller = new StudentController();
-        $data = $controller->getStudentTuition($_SESSION['username'], $khoa);
-    }
-?>
-
-<table class="table mt-4">
+    
     <?php
-        if(isset($data)) {
-            $index = 0;
-            echo "<h3>Học phí $khoa</h3>";
-            echo "<thead>
-            <tr>
-                <th>#</th>
-                <th>Mã học phần</th>
-                <th>Học phí một tín</th>
-                <th>Số tín chỉ</th>
-                <th>Thành tiền</th>
-            </tr>
-            </thead>
-            <tbody>";
-            while($row = mysqli_fetch_assoc($data)) {
-                echo '<tr>';
-                echo"<td class='table-cell'>".$index."</td>";
-                echo"<td class='table-cell'>".$row["maHocPhan"]."</td>";
-                echo"<td class='table-cell'>".$row["hocPhiMotTin"]."</td>";
-                echo"<td class='table-cell'>".$row["soTinChi"]."</td>";
-                echo"<td class='table-cell'>".$row["thanhTien"]."</td>";
-                echo '</tr>';
-                $index++;
-            }
-            echo "</tbody>";
+        if(isset($_POST['search_tuition'])) {
+            $khoa = $_POST['hocky_selector'];
+            require_once('./Controllers/StudentController.php');
+            $controller = new StudentController();
+            $data = $controller->handlegetStudentTuition($_SESSION['username'], $khoa);
         }
     ?>
-</table>
+
+    <table class="table mt-4">
+        <?php
+            if(isset($data)) {
+                $index = 0;
+                echo "<h3>Học phí $khoa</h3>";
+                echo "<thead>
+                <tr>
+                    <th>#</th>
+                    <th>Mã học phần</th>
+                    <th>Học phí một tín</th>
+                    <th>Số tín chỉ</th>
+                    <th>Thành tiền</th>
+                </tr>
+                </thead>
+                <tbody>";
+                while($row = mysqli_fetch_assoc($data)) {
+                    echo '<tr>';
+                    echo"<td class='table-cell'>".$index."</td>";
+                    echo"<td class='table-cell'>".$row["maHocPhan"]."</td>";
+                    echo"<td class='table-cell'>".$row["hocPhiMotTin"]."</td>";
+                    echo"<td class='table-cell'>".$row["soTinChi"]."</td>";
+                    echo"<td class='table-cell'>".$row["thanhTien"]."</td>";
+                    echo '</tr>';
+                    $index++;
+                }
+                echo "</tbody>";
+            }
+        ?>
+    </table>
+</div>

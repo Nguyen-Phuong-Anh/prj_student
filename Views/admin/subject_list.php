@@ -4,7 +4,15 @@
     $data = $controller->showKhoa();
 ?>
 
-<div>
+<style>
+    .insideBody {
+        height: 100%;
+        width: 80%;
+        padding-right: 20px;
+    }
+</style>
+
+<div class="insideBody">
     <form action="" method="post">
         <div class="form-group mt-3">
             <label class="pb-2" for="khoa_selector">Khoa</label>

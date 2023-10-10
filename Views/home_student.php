@@ -34,6 +34,13 @@
             height: 100vh;
         }
 
+        .body2 {
+          margin-left: 100px;
+          width: 100%;
+          padding: 0 30px;
+          overflow-y: auto;
+        }
+
         .nav_btn {
           outline: none;
           border: none;
@@ -110,7 +117,7 @@
       </div>
   </div>
 
-  <div class="w-50 me-auto ms-auto">
+  <div class="body2">
     <?php
         switch ($route) {
           case 'home_student':

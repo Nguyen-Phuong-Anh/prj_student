@@ -35,7 +35,7 @@
         $controller = new StudentController();
         $data = $controller->handleGetStudentSbj($_SESSION['username'], $khoa);
 
-        if(isset($data)) {
+        if(!empty($data)) {
             echo "<h4>Danh sách học phần $khoa</h4>";
             $index = 0;
             echo '<table class="table mt-4">';

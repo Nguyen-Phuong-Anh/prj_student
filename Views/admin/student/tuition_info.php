@@ -1,4 +1,12 @@
-<div class="mt-4">
+<style>
+    .insideBody {
+        height: 100%;
+        width: 80%;
+        padding-right: 20px;
+    }
+</style>
+
+<div class="mt-4 insideBody">
     <h1>Chi tiết học phí</h1>
     <table class="table mt-4">
         <?php

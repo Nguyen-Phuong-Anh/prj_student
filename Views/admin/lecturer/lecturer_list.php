@@ -4,7 +4,15 @@
     $data = $controller->showKhoa();
 ?>
 
-<div>
+<style>
+    .insideBody {
+        height: 100%;
+        width: 80%;
+        padding-right: 20px;
+    }
+</style>
+
+<div class="insideBody">
     <form action="" method="post" class="wrapper ml-4">
         <div>
             <div class="form-group mt-3">
@@ -34,7 +42,7 @@
                 require_once('./Controllers/AdminController.php');
                 $controller = new AdminController();
                 $data = $controller->handleSearchLecturer();
-                if(isset($data)) {
+                if(!empty($data)) {
                     $index = 0;
                     echo "<thead>
                     <tr>

@@ -1,4 +1,12 @@
-<div class="mt-4">
+<style>
+    .insideBody {
+        height: 100%;
+        width: 50%;
+        padding-right: 20px;
+    }
+</style>
+
+<div class="mt-4 insideBody">
     <h3>Đổi Mật Khẩu</h3>
     <form action="" method="post">
         <div class="form-group mt-2">

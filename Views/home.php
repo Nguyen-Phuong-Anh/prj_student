@@ -29,8 +29,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         .homeBody {
-            display: flex;
-            height: 100vh;
+          display: flex;
+          height: 100vh;
+        }
+
+        .body2 {
+          margin-left: 100px;
+          width: 100%;
+          padding: 0 30px;
+          overflow-y: auto;
         }
 
         .nav_btn {
@@ -132,7 +139,7 @@
       </div>
   </div>
 
-  <div class="w-50 me-auto ms-auto">
+  <div class="body2">
       <?php
       switch ($route) {
         case 'home':

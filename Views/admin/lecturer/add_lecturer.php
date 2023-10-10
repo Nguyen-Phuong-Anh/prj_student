@@ -1,4 +1,12 @@
-<div class="mt-5">
+<style>
+    .insideBody {
+        height: 100%;
+        width: 80%;
+        padding-right: 20px;
+    }
+</style>
+
+<div class="mt-4 insideBody">
     <h2 class="mt-4 ml-3">Thêm Mới Giảng Viên</h2>
     <form action="" method="post" class="wrapper ml-4" id="studentForm">
         <div>
@@ -41,7 +49,7 @@
             </div>
             <div class="form-group mt-3">
                 <label class="pb-2" for="chucVu">Chức vụ</label>
-                <input type="text" class="form-control" name="chucVu" placeholder="Chức vụ" >
+                <input type="text" class="form-control" name="chucVu" placeholder="VD: Giảng Viên" >
             </div>
             <div class="form-group mt-3">
                 <label class="pb-2" for="email">Email</label>

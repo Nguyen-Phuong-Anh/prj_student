@@ -58,7 +58,7 @@
             }
         }
 
-        public function getStudentTuition($maSV, $khoa) {
+        public function handlegetStudentTuition($maSV, $khoa) {
             require_once('./Models/StudentModel.php');
             $model = new StudentModel();
             $data1 = $model->getMaHocPhi($maSV, $khoa);

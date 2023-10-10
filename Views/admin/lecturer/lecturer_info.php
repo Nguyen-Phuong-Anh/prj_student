@@ -4,20 +4,33 @@
     $array = $controller->handleGetLecturer();
 ?>
 
-<form method="post" action="">
+<style>
+    .insideBody {
+        height: 100%;
+        width: 80%;
+        padding-right: 20px;
+    }
+    
+    .group2 {
+        margin-left: 40px;
+        width: 100%;
+    }
+</style>
+
+<form method="post" action="" class="insideBody mt-4">
     <div>
         <h1>Thông tin giảng viên</h1>
     </div>
     <div class="w-100">
-        <h2>Thông tin cá nhân</h2>
-        <div class="d-flex">
-            <div>
+        <h3 class="mt-3">Thông tin cá nhân</h3>
+        <div class="d-flex lecturer_info">
+            <div class="mt-3">
                 <img src="http://localhost/prj_student/public/imgs/avatar-1577909_640.png" />
                 <hr>
                 <p><?php echo $array[0][0]['hoTen']; ?></p>
                 <p><?php echo $array[0][0]['maNhanVien']; ?></p>
             </div>
-            <div>
+            <div class="group2">
                 <div class="form-group mt-2">
                     <label class="pb-2" for="hoTen">Họ và Tên</label>
                     <input type="text" class="form-control" name="hoTen" value="<?php echo $array[0][0]['hoTen']; ?>" >
@@ -53,7 +66,7 @@
         </div>
     </div>
     <div>
-        <h2>Giảng dạy</h2>
+        <h3>Giảng dạy</h3>
         <div class="form-group mt-2">
             <label class="pb-2" for="khoa_selector">Khoa</label>
             <select name="khoa_selector" class="form-select" aria-label="Default select example">

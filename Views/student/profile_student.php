@@ -4,9 +4,22 @@
     $array = $controller->getStudentInfo($_SESSION['username']);
 ?>
 
-<div class="mt-5">
+<style>
+    .insideBody {
+        height: 100%;
+        width: 80%;
+        padding-right: 20px;
+    }
+    
+    .group2 {
+        margin-left: 40px;
+        width: 100%;
+    }
+</style>
+
+<div class="mt-5 insideBody">
     <h2 class="mt-4 ml-3">Thông tin sinh viên</h2>
-    <div class="d-flex">
+    <div class="d-flex mt-3">
         <div>
             <img src="http://localhost/prj_student/public/imgs/avatar-1577909_640.png" />
             <hr>
@@ -14,7 +27,7 @@
             <p><?php echo $array[0][0]['maSinhVien']; ?></p>
         </div>
 
-        <div class="ms-5">
+        <div class="ms-5 group2">
             <div>
                 <p><strong>Họ và Tên</strong></p>
                 <p><?php echo $array[0][0]['hoTen']; ?></p>

@@ -1,4 +1,12 @@
-<div class="mt-4">
+<style>
+    .insideBody {
+        height: 100%;
+        width: 80%;
+        padding-right: 20px;
+    }
+</style>
+
+<div class="mt-4 insideBody">
     <h2 class="mt-4 ml-3">Thêm Mới Sinh Viên</h2>
     <form action="" method="post" class="wrapper ml-4" id="studentForm">
         <div>

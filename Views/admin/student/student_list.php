@@ -4,7 +4,16 @@
     $data = $controller->showKhoa();
 ?>
 
-<div>
+<style>
+    .insideBody {
+        height: 100%;
+        width: 80%;
+        padding-right: 20px;
+    }
+</style>
+
+<div class="insideBody mt-4">
+    <h1>Tìm kiếm sinh viên</h1>
     <form action="" method="post" class="wrapper ml-4">
         <div>
             <div class="form-group mt-3">

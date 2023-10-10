@@ -29,8 +29,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         .homeBody {
-            display: flex;
-            height: 100vh;
+          display: flex;
+          height: 100vh;
+        }
+
+        .body2 {
+          margin-left: 100px;
+          width: 100%;
+          padding: 0 30px;
+          overflow-y: auto;
         }
 
         .nav_btn {
@@ -46,7 +53,7 @@
     </style>
 </head>
 <body class="homeBody">
-  <div class='d-flex flex-column flex-shrink-0 p-3 text-white bg-dark' style='width: 280px;'>
+  <div class='d-flex flex-column flex-shrink-0 p-3 text-white bg-dark' style='width: 280px; height: 100vh;'>
     <a href='.?route=home_lecturer' class='d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none'>
       <span class='fs-4'>UTT</span>
     </a>
@@ -90,7 +97,7 @@
     </div>
   </div>
 
-  <div class="w-50 me-auto ms-auto">
+  <div class="body2">
     <?php
         switch ($route) {
           case 'home_lecturer':

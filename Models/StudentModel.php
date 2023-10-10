@@ -382,7 +382,6 @@
             }
 
             $thanhTien = intval($rows[0]['hocPhiMotTin']) * intval($rows[0]['soTinChi']);
-            echo '<script>alert("'.$thanhTien.'")</script>';
 
             mysqli_stmt_bind_param($stmt, "sssss", $maHPhi, $rows[0]['maHocPhan'], $rows[0]['hocPhiMotTin'], $rows[0]['soTinChi'], $thanhTien);
             if(mysqli_stmt_execute($stmt)) {

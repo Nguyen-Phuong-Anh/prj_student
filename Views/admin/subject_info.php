@@ -4,7 +4,15 @@
     $array = $controller->handleGetSubject();
 ?>
 
-<form method="post" action="">
+<style>
+    .insideBody {
+        height: 100%;
+        width: 80%;
+        padding-right: 20px;
+    }
+</style>
+
+<form method="post" action="" class="insideBody mt-4">
     <div>
         <h1>Chi tiết học phần</h1>
     </div>
