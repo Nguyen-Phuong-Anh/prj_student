@@ -61,7 +61,7 @@
         }
 
         public function getMaBangDiem($maSV, $khoa) {
-            require_once('./Config/DBConn.php');
+            require('./Config/DBConn.php');
             $sql = "SELECT maBangDiem FROM bangdiem WHERE maSinhVien= ? AND hocKy= ?;";
             $stmt = mysqli_stmt_init($conn);
 

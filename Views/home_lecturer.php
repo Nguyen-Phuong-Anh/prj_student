@@ -52,22 +52,28 @@
     </a>
     <hr>
     <ul class='nav nav-pills flex-column mb-auto'>
-        <li class='nav-item'>
-          <a href='.?route=home_lecturer' class='nav-link active' aria-current='page'>
+        <li class='mb-1'>
+          <button class='btn btn-toggle text-white align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#lecturer-collapse' aria-expanded='false'>
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 20 20">
               <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
             </svg>
             Trang chủ
-          </a>
+          </button>
+          <div class='collapse text-white' id='lecturer-collapse'>
+            <ul class='btn-toggle-nav list-unstyled fw-normal pb-1 small'>
+                <li><a href='.?route=home_lecturer' class='nav-link text-white rounded'>Thông tin GV</a></li>
+                <li><a href='.?route=pwd_lecturer' class='nav-link text-white rounded'>Đổi mật khẩu</a></li>
+            </ul>
+          </div>
         </li>
         <li class='mb-1'>
-          <button class='btn btn-toggle text-white align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#lecturer-collapse' aria-expanded='false'>
+          <button class='btn btn-toggle text-white align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#std_manage-collapse' aria-expanded='false'>
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person-badge-fill" viewBox="0 0 20 20">
                 <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm4.5 0a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm5 2.755C12.146 12.825 10.623 12 8 12s-4.146.826-5 1.755V14a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-.245z"/>
             </svg>
               Sinh viên
           </button>
-          <div class='collapse text-white' id='lecturer-collapse'>
+          <div class='collapse text-white' id='std_manage-collapse'>
             <ul class='btn-toggle-nav list-unstyled fw-normal pb-1 small'>
                 <li><a href='.?route=add_stdPoint' class='nav-link text-white rounded'>Thêm điểm</a></li>
                 <li><a href='.?route=getStudent_info' class='nav-link text-white rounded'>Bảng điểm SV</a></li>
@@ -91,6 +97,12 @@
             require_once('./Controllers/LecturerController.php');
             $controller = new LecturerController();
             $controller->showLecturerProfile();
+            break;
+
+          case 'pwd_lecturer':
+            require_once('./Controllers/LecturerController.php');
+            $controller = new LecturerController();
+            $controller->showChangePwdLecturer();
             break;
           
           case 'getStudent_info':

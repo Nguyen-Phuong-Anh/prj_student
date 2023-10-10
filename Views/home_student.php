@@ -53,23 +53,29 @@
     </a>
     <hr>
     <ul class='nav nav-pills flex-column mb-auto'>
-        <li class='nav-item'>
-          <a href='.?route=home_student' class='nav-link active' aria-current='page'>
+        <li class='mb-1'>
+          <button class='btn btn-toggle text-white align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#student-collapse' aria-expanded='false'>
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 20 20">
               <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
             </svg>
             Trang chủ
-          </a>
+          </button>
+          <div class='collapse text-white' id='student-collapse'>
+            <ul class='btn-toggle-nav list-unstyled fw-normal pb-1 small'>
+                <li><a href='.?route=home_student' class='nav-link text-white rounded'>Thông tin SV</a></li>
+                <li><a href='.?route=pwd_student' class='nav-link text-white rounded'>Đổi mật khẩu</a></li>
+            </ul>
+          </div>
         </li>
         <li class='mb-1'>
-          <button class='btn btn-toggle text-white align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#lecturer-collapse' aria-expanded='false'>
+          <button class='btn btn-toggle text-white align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#sbj-collapse' aria-expanded='false'>
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-vector-pen" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
               <path fill-rule="evenodd" d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
             </svg>
             Đăng kí học phần
           </button>
-          <div class='collapse text-white' id='lecturer-collapse'>
+          <div class='collapse text-white' id='sbj-collapse'>
             <ul class='btn-toggle-nav list-unstyled fw-normal pb-1 small'>
                 <li><a href='.?route=getStudent_sbj' class='nav-link text-white rounded'>Học phần đã đăng ký</a></li>
                 <li><a href='.?route=regist_subject' class='nav-link text-white rounded'>Đăng ký</a></li>
@@ -112,6 +118,12 @@
             $controller = new StudentController();
             $controller->showProfileStudent();
             break;
+          
+          case 'pwd_student':
+          require_once('./Controllers/StudentController.php');
+          $controller = new StudentController();
+          $controller->showChangePwdStudent();
+          break;
 
           case 'point_student':
             require_once('./Controllers/StudentController.php');

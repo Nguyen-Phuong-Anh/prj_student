@@ -8,6 +8,10 @@
             require_once('./Views/student/profile_student.php');
         }
 
+        public function showChangePwdStudent(){
+            require_once('./Views/changePwd.php');
+        }
+
         public function showSubjectStudent(){
             require_once('./Views/student/subject_student.php');
         }

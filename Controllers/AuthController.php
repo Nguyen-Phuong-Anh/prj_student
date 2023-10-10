@@ -10,37 +10,41 @@
                     header("Location: ./");
                 }
                 $username = $_POST['username'];
-                // $password = $_POST['password'];
+                $pwd = $_POST['password'];
 
                 require_once('./Models/AuthModel.php');
                 $authoMod = new AuthModel();
                 $data = $authoMod->authenticate($username);
 
-                //check the hash password
-                // $pwdHashed = $data['password'];
-                // $checkPwd = password_verify($pwd, $pwdHashed);
-                // if($checkPwd === false) {
-
-                // } else {}
-                if($data['maVaiTro'] === '101') {
-                    session_start();
-                    $_SESSION['username'] = $data['tenTaiKhoan'];
-                    $_SESSION['role'] = $data['maVaiTro'];
-                    header("Location: .?route=home");
-                    exit();
-                } else if($data['maVaiTro'] === '103') {
-                    session_start();
-                    $_SESSION['username'] = $data['tenTaiKhoan'];
-                    $_SESSION['role'] = $data['maVaiTro'];
-                    header("Location: .?route=home_student");
-                    exit();
+                $pwdHashed = $data['matKhau'];
+                $checkPwd = password_verify($pwd, $pwdHashed);
+                if($checkPwd === false) {
+                    echo '<script>alert("Password or username is invalid!")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/';
+                    </script>";
                 } else {
-                    session_start();
-                    $_SESSION['username'] = $data['tenTaiKhoan'];
-                    $_SESSION['role'] = $data['maVaiTro'];
-                    header("Location: .?route=home_lecturer");
-                    exit();
+                    if($data['maVaiTro'] === '101') {
+                        session_start();
+                        $_SESSION['username'] = $data['tenTaiKhoan'];
+                        $_SESSION['role'] = $data['maVaiTro'];
+                        header("Location: .?route=home");
+                        exit();
+                    } else if($data['maVaiTro'] === '103') {
+                        session_start();
+                        $_SESSION['username'] = $data['tenTaiKhoan'];
+                        $_SESSION['role'] = $data['maVaiTro'];
+                        header("Location: .?route=home_student");
+                        exit();
+                    } else {
+                        session_start();
+                        $_SESSION['username'] = $data['tenTaiKhoan'];
+                        $_SESSION['role'] = $data['maVaiTro'];
+                        header("Location: .?route=home_lecturer");
+                        exit();
+                    }
                 }
+                
             }
         }
 

@@ -280,5 +280,7 @@
             $model = new AdminModel($maNV);
             $model->deleteLecturer($maNV);
         }
+
+        
     }
 ?>

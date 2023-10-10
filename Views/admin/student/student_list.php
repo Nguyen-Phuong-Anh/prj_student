@@ -38,7 +38,7 @@
                 require_once('./Controllers/AdminController.php');
                 $controller = new AdminController();
                 $data = $controller->handleSearchStudent();
-                if(isset($data)) {
+                if(!empty($data)) {
                     $index = 0;
                     echo "<thead>
                     <tr>

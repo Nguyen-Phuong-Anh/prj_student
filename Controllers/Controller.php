@@ -14,5 +14,11 @@
         public function showHomeLecturer() {
             require_once('./Views/home_lecturer.php');
         }
+
+        public function handleChangePwd() {
+            require_once('./Models/AuthModel.php');
+            $model = new AuthModel();
+            $model->changePwd($_POST['tenTK']);
+        }
     }
 ?>

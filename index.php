@@ -19,13 +19,13 @@
             $controller = new Controller();
             $controller->showHome();
             break;
-        case 'home_student': case 'subject_student' : case 'point_student' : case 'tuition_student' : case 'regist_subject': case 'getStudent_sbj':
+        case 'home_student': case 'subject_student' : case 'point_student' : case 'tuition_student' : case 'regist_subject': case 'getStudent_sbj': case 'pwd_student':
             require_once('./Controllers/Controller.php');
             $controller = new Controller();
             $controller->showHomeStudent();
             break;
 
-        case 'home_lecturer': case 'student_point': case 'getStudent_info': case 'add_stdPoint': case 'std_Point':
+        case 'home_lecturer': case 'student_point': case 'getStudent_info': case 'add_stdPoint': case 'std_Point': case 'pwd_lecturer':
             require_once('./Controllers/Controller.php');
             $controller = new Controller();
             $controller->showHomeLecturer();

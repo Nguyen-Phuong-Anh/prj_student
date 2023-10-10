@@ -1,4 +1,4 @@
-<div class="mt-5">
+<div class="mt-4">
     <h2 class="mt-4 ml-3">Thêm Mới Sinh Viên</h2>
     <form action="" method="post" class="wrapper ml-4" id="studentForm">
         <div>
