@@ -89,7 +89,7 @@
         public function handleAddPoint() {
             $maSV = $_GET['maSV'];
             $hocKy = $_POST['hocKy'];
-        require_once('./Models/LecturerModel.php');
+            require_once('./Models/LecturerModel.php');
             $model = new LecturerModel();
             $model->addPoint($maSV, $hocKy);
         }

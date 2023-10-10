@@ -34,48 +34,48 @@
         </div>
         <button type="submit" name="search_point" class="btn btn-primary mt-4">Tìm kiếm</button>
     </form>
-</div>
 
-<?php
-    if(isset($_POST['search_point'])) {
-        $khoa = $_POST['hocky_selector'];
-        require_once('./Controllers/StudentController.php');
-        $controller = new StudentController();
-        $data = $controller->getStudentPoint($_SESSION['username'], $khoa);
-    }
-?>
-
-<table class="table mt-4">
     <?php
-        if(isset($data)) {
-            $index = 0;
-            echo "<thead>
-            <tr>
-                <th>#</th>
-                <th>Mã học phần</th>
-                <th>Điểm CC</th>
-                <th>Điểm TH</th>
-                <th>Điểm TL</th>
-                <th>Điểm kết thúc</th>
-                <th>Điểm tổng kết</th>
-                <th>Điểm chữ</th>
-            </tr>
-            </thead>
-            <tbody>";
-            while($row = mysqli_fetch_assoc($data)) {
-                echo '<tr>';
-                echo"<td class='table-cell'>".$index."</td>";
-                echo"<td class='table-cell'>".$row["maHocPhan"]."</td>";
-                echo"<td class='table-cell'>".$row["diemCC"]."</td>";
-                echo"<td class='table-cell'>".$row["diemTH"]."</td>";
-                echo"<td class='table-cell'>".$row["diemTL"]."</td>";
-                echo"<td class='table-cell'>".$row["diemKetThuc"]."</td>";
-                echo"<td class='table-cell'>".$row["diemTongKet"]."</td>";
-                echo"<td class='table-cell'>".$row["diemChu"]."</td>";
-                echo '</tr>';
-                $index++;
-            }
-            echo "</tbody>";
+        if(isset($_POST['search_point'])) {
+            $khoa = $_POST['hocky_selector'];
+            require_once('./Controllers/StudentController.php');
+            $controller = new StudentController();
+            $data = $controller->getStudentPoint($_SESSION['username'], $khoa);
         }
     ?>
-</table>
+
+    <table class="table mt-4">
+        <?php
+            if(isset($data)) {
+                $index = 0;
+                echo "<thead>
+                <tr>
+                    <th>#</th>
+                    <th>Mã học phần</th>
+                    <th>Điểm CC</th>
+                    <th>Điểm TH</th>
+                    <th>Điểm TL</th>
+                    <th>Điểm kết thúc</th>
+                    <th>Điểm tổng kết</th>
+                    <th>Điểm chữ</th>
+                </tr>
+                </thead>
+                <tbody>";
+                while($row = mysqli_fetch_assoc($data)) {
+                    echo '<tr>';
+                    echo"<td class='table-cell'>".$index."</td>";
+                    echo"<td class='table-cell'>".$row["maHocPhan"]."</td>";
+                    echo"<td class='table-cell'>".$row["diemCC"]."</td>";
+                    echo"<td class='table-cell'>".$row["diemTH"]."</td>";
+                    echo"<td class='table-cell'>".$row["diemTL"]."</td>";
+                    echo"<td class='table-cell'>".$row["diemKetThuc"]."</td>";
+                    echo"<td class='table-cell'>".$row["diemTongKet"]."</td>";
+                    echo"<td class='table-cell'>".$row["diemChu"]."</td>";
+                    echo '</tr>';
+                    $index++;
+                }
+                echo "</tbody>";
+            }
+        ?>
+    </table>
+</div>

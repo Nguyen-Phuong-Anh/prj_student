@@ -48,7 +48,7 @@
                                     echo '<option value="' . $row['maHocPhan'] . '">' . $data1 . '</option>';
                                 }
                             }
-                            echo '<input type="hidden" value="'.$_POST['search_hocKy'].'" name="hocKy" >';
+                            echo '<input type="hidden" value="'.$_POST['hocky_selector'].'" name="hocKy" >';
                         }
                     ?>
                 </select>
@@ -92,6 +92,11 @@
         $controller = new LecturerController();
         $controller->handleAddPoint();
     } else if(isset($_POST['clear'])) {
-
+        $_POST['diemCC'] = '';
+        $_POST['diemTH'] = '';
+        $_POST['diemTL'] = '';
+        $_POST['diemKetThuc'] = '';
+        $_POST['diemTongKet'] = '';
+        $_POST['diemChu'] = '';
     }
 ?> 
