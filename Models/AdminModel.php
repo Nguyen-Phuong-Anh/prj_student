@@ -230,6 +230,13 @@
             $searchmaSV = "%{$maSV}%";
             $searchnienKhoa = "%{$nienKhoa}%";
             $searchkhoa = "%{$khoa}%";
+
+            if($maSV === '' && $nienKhoa === '' && $khoa === '') {
+                echo '<script>alert("Please enter information!")</script>';
+                echo "<script>
+                window.location = 'http://localhost/prj_student/?route=student_list';
+                </script>";
+            }
             $sql = "SELECT maSinhVien, khoa, hoTen, ngaySinh, gioiTinh FROM sinhvien WHERE maSinhVien LIKE ? AND khoa LIKE ? AND maKhoa LIKE ?;";
             $stmt = mysqli_stmt_init($conn);
 
@@ -252,6 +259,14 @@
             require('./Config/DBConn.php');
             $searchmaSV = "%{$maSV}%";
             $searchkhoa = "%{$khoa}%";
+
+            if($maSV === '' && $khoa === '') {
+                echo '<script>alert("Please enter information!")</script>';
+                echo "<script>
+                window.location = 'http://localhost/prj_student/?route=tuition';
+                </script>";
+            }
+
             $sql = "SELECT * FROM hocphi WHERE maSinhVien LIKE ? AND maKhoa LIKE ?;";
             $stmt = mysqli_stmt_init($conn);
 
@@ -271,6 +286,12 @@
         }
 
         public function getSearchSubject($khoa) {
+            if($khoa === '') {
+                echo '<script>alert("Please enter information!")</script>';
+                echo "<script>
+                window.location = 'http://localhost/prj_student/?route=subject_list';
+                </script>";
+            }
             require('./Config/DBConn.php');
             $sql = "SELECT * FROM hocphan WHERE maKhoa= ?;";
             $stmt = mysqli_stmt_init($conn);
@@ -291,25 +312,32 @@
         }
 
         public function getSearchLecturer($maSV, $khoa) {
-            require('./Config/DBConn.php');
             $searchmaSV = "%{$maSV}%";
             $searchkhoa = "%{$khoa}%";
-            $sql = "SELECT maNhanVien, hoTen, ngaySinh, gioiTinh, chucVu FROM giangvien WHERE maNhanVien LIKE ? AND maKhoa LIKE ?;";
-            $stmt = mysqli_stmt_init($conn);
-
-            if(!mysqli_stmt_prepare($stmt, $sql)) { 
-                header("Location: ./");
-                exit();
+            if($maSV === '' && $khoa === '') {
+                echo '<script>alert("Please enter the information")</script>';
+                echo "<script>
+                window.location = 'http://localhost/prj_student/?route=lecturer_list';
+                </script>";
+            } else {
+                require('./Config/DBConn.php');
+                $sql = "SELECT maNhanVien, hoTen, ngaySinh, gioiTinh, chucVu FROM giangvien WHERE maNhanVien LIKE ? AND maKhoa LIKE ?;";
+                $stmt = mysqli_stmt_init($conn);
+    
+                if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                    header("Location: ./");
+                    exit();
+                }
+    
+                mysqli_stmt_bind_param($stmt, "ss", $searchmaSV, $searchkhoa);
+                mysqli_stmt_execute($stmt);
+    
+                $resultData = mysqli_stmt_get_result($stmt);
+                return $resultData;
+    
+                mysqli_stmt_close($stmt);
+                $conn->close();
             }
-
-            mysqli_stmt_bind_param($stmt, "ss", $searchmaSV, $searchkhoa);
-            mysqli_stmt_execute($stmt);
-
-            $resultData = mysqli_stmt_get_result($stmt);
-            return $resultData;
-
-            mysqli_stmt_close($stmt);
-            $conn->close();
         }
 
         public function getStudent($maSV) {

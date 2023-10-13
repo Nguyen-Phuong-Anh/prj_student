@@ -87,16 +87,21 @@
         }
 
         public function handleRegistSbj($maSV, $maKhoa) {
-            require_once('./Models/StudentModel.php');
-            $model = new StudentModel();
-            $result = $model->AddRegistSubject($maSV, $_POST['hocky_selector'], $_POST['lopDK'], $_POST['hocphanDK']);
-            if($result) {
-                $model->AddRegistSubjectInDetail($result, $_POST['hocphanDK'], $_POST['lopDK']);
-                //them vao hoc phi
-                $maHPhi = $model->AddInTuition($maSV, $maKhoa, $_POST['hocky_selector']);
-                if(isset($maHPhi)) {
-                    $model->AddInDetailTuition($maHPhi, $_POST['hocphanDK']);
-                }                 
+            if($_POST['hocky_selector'] === '' || $_POST['lopDK'] === '' || $_POST['hocphanDK']) {
+                echo '<script>alert("Please fill all the information")</script>';
+                header("Location: ./");
+            } else {
+                require_once('./Models/StudentModel.php');
+                $model = new StudentModel();
+                $result = $model->AddRegistSubject($maSV, $_POST['hocky_selector'], $_POST['lopDK'], $_POST['hocphanDK']);
+                if($result) {
+                    $model->AddRegistSubjectInDetail($result, $_POST['hocphanDK'], $_POST['lopDK']);
+                    //them vao hoc phi
+                    $maHPhi = $model->AddInTuition($maSV, $maKhoa, $_POST['hocky_selector']);
+                    if(isset($maHPhi)) {
+                        $model->AddInDetailTuition($maHPhi, $_POST['hocphanDK']);
+                    }                 
+                }
             }
         }
 
