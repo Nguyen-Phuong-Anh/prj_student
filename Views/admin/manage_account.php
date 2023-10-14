@@ -7,7 +7,7 @@
             <form class="input-group mb-3" action="" method="post">
                 <div class="me-3"><input name="search" type="text" class="form-control" placeholder="Search..."></div>
                 <div class="input-group-append">
-                    <button name="submit_search" class="btn btn-primary" type="submit">Search</button> //tim kiem tai khoan
+                    <button name="submit_search" class="btn btn-primary" type="submit">Search</button>
                 </div>
             </form>
             <table class="table mt-4">

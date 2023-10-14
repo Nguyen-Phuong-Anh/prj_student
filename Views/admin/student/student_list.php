@@ -1,7 +1,7 @@
 <?php
     require_once('./Controllers/AdminController.php');
     $controller = new AdminController();
-    $data = $controller->showKhoa();
+    $data = $controller->showKhoa(); //tim kiem khoa
 ?>
 
 <style>

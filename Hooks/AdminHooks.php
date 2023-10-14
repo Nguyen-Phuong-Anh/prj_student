@@ -55,12 +55,35 @@
             exit();
         }
 
-        mysqli_stmt_bind_param($stmt, "s",$maNV); //
+        mysqli_stmt_bind_param($stmt, "s", $maNV); //
         mysqli_stmt_execute($stmt);
 
         $resultData = mysqli_stmt_get_result($stmt);
         while ($row = mysqli_fetch_assoc($resultData)) {
             if(isset($row['maNhanVien'])) {
+                return FALSE;
+            }
+        }
+        mysqli_stmt_close($stmt);
+        
+        return TRUE;
+    }
+
+    function checkLecturerClassDuplicate($maNV, $maLop, $conn) {
+        $sql = "SELECT * FROM lop WHERE maLop = ? AND maGV= ?;";
+        $stmt = mysqli_stmt_init($conn); 
+
+        if(!mysqli_stmt_prepare($stmt, $sql)) {
+            header("Location: ./");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "ss", $maLop, $maNV); //
+        mysqli_stmt_execute($stmt);
+
+        $resultData = mysqli_stmt_get_result($stmt);
+        while ($row = mysqli_fetch_assoc($resultData)) {
+            if(isset($row['maLop'])) {
                 return FALSE;
             }
         }

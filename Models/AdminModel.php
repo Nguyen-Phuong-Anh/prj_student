@@ -125,11 +125,11 @@
 
             mysqli_stmt_execute($stmt);
 
-            $resultData = mysqli_stmt_get_result($stmt);
-            return $resultData;
-
+            $resultData = mysqli_stmt_get_result($stmt); 
             mysqli_stmt_close($stmt);
             $conn->close();
+            
+            return $resultData;
         }
 
         public function getLop($maNV) {
@@ -220,6 +220,42 @@
             $conn->close();
         }
 
+        public function addLecturerClass($maNV, $maLop, $maHP) {
+            require('./Config/DBConn.php');
+            require_once('./Hooks/AdminHooks.php');
+
+            if(checkLecturerClassDuplicate($maNV, $maLop, $conn)) {
+                $stmt = mysqli_stmt_init($conn);
+                $sql = "UPDATE lop
+                SET
+                    maGV = ?
+                WHERE
+                    maLop = ? AND maHocPhan= ?;
+                ";
+                if (mysqli_stmt_prepare($stmt, $sql)) {
+                    mysqli_stmt_bind_param($stmt, "sss", $maNV, $maLop, $maHP);
+
+                    if (mysqli_stmt_execute($stmt)) {
+                        echo '<script>alert("Assigned successfully!")</script>';
+                        echo "<script>
+                        window.location = 'http://localhost/prj_student/?route=lecturer_list';
+                        </script>";
+                    } else {
+                        echo '<script>alert("Assign failed!")</script>';
+                    }
+
+                    mysqli_stmt_close($stmt);
+                } else {
+                    header("Location: ./");
+                    exit();
+                }
+                
+                $conn->close();
+            } else {
+                echo '<script>alert("Class assigned!")</script>';
+            }
+        }
+
         public function addSubject($maHocPhan, $khoa, $tenMonHoc, $soTinChi, $batBuoc, $hocPhiMotTin) {
             require('./Config/DBConn.php');
             require_once('./Hooks/AdminHooks.php');
@@ -304,12 +340,12 @@
 
             mysqli_stmt_bind_param($stmt, "sss", $searchmaSV, $searchnienKhoa, $searchkhoa);
             mysqli_stmt_execute($stmt);
+            
+            mysqli_stmt_close($stmt);
+            $conn->close();
 
             $resultData = mysqli_stmt_get_result($stmt);
             return $resultData;
-
-            mysqli_stmt_close($stmt);
-            $conn->close();
         }
 
         public function getSearchTuition($maSV, $khoa) {
@@ -416,10 +452,11 @@
                 mysqli_stmt_execute($stmt);
     
                 $resultData = mysqli_stmt_get_result($stmt);
-                return $resultData;
-    
+
                 mysqli_stmt_close($stmt);
                 $conn->close();
+
+                return $resultData;
             }
         }
 

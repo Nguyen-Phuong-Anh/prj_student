@@ -171,11 +171,6 @@
         
         public function handleAddClass() {
             if(!$_POST['tenLop'] || !$_POST['subject_selector'] || !$_POST['siSoToiDa'] || !$_POST['thoiGian'] || !$_POST['diaDiem']) {
-                // echo '<script>alert("'.$_POST['tenLop'].'")</script>';
-                // echo '<script>alert("'.$_POST['siSo'].'")</script>';
-                // echo '<script>alert("'.$_POST['siSoToiDa'].'")</script>';
-                // echo '<script>alert("'.$_POST['thoiGian'].'")</script>';
-                // echo '<script>alert("'.$_POST['diaDiem'].'")</script>';
                 echo '<script>alert("Please fill all the information")</script>';
                 header("Location: ./");
             } else {
@@ -191,6 +186,15 @@
                 $model = new AdminModel();
                 $model->addClass($maHP, $maLop, $tenLop, $siSo, $siSoToiDa, $thoiGian, $diaDiem);
             }
+        }
+
+        public function handleAddLecturerClass() {
+            $maNV = $_GET['param'];
+            $maLop = $_POST['maLop_add'];
+            $maHP = $_POST['maHocPhan_add'];
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $model->addLecturerClass($maNV, $maLop, $maHP);
         }
 
         //search
@@ -229,6 +233,15 @@
             if($_POST['khoa_selector'] === 'Khoa') {
                 $khoa = '';
             } else $khoa = $_POST['khoa_selector'];
+
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $data = $model->getSearchSubject($khoa);
+            return $data;
+        }
+
+        public function handleSearchSubject_Class() {
+            $khoa = $_GET['maKhoa'];
 
             require_once('./Models/AdminModel.php');
             $model = new AdminModel();
