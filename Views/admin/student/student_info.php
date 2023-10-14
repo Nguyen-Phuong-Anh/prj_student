@@ -88,9 +88,29 @@
     </div>
     <div class="form-group mt-4">
         <button name="change_stdInfo" type="submit" class="btn btn-primary">Lưu thay đổi</button>
-        <button name="delete_std" type="submit" class="btn btn-danger">Xóa</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
     </div>
-</form>
+</form>t
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Confirm</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Do you want to delete this student?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+        <form action="" method="post">
+            <button name="delete_std" type="submit" class="btn btn-danger">Xóa</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <?php
     if(isset($_POST['change_stdInfo'])) {

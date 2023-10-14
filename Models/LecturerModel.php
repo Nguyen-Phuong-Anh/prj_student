@@ -150,6 +150,35 @@
             $conn->close();
         }
 
+        public function deletePoint() {
+            require('./Config/DBConn.php');
+
+            $maBD = $_POST['maBD_delete'];
+            $maHP = $_POST['maHP_delete'];
+
+            $sql = "DELETE FROM chitietbangdiem WHERE maBangDiem= ? AND maHocPhan= ?;";
+            $stmt = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, "ss", $maBD, $maHP);
+
+            if (mysqli_stmt_execute($stmt)) {
+                echo '<script>alert("Delete successful!")</script>';
+                echo "<script>
+                window.location = 'http://localhost/prj_student/?route=getStudent_info';
+                </script>";
+            } else {
+                echo '<script>alert("Delete failed!")</script>';
+            }
+            
+            mysqli_stmt_close($stmt);
+            $conn->close();
+        }
+
         public function getHPName($maHP) {
             require('./Config/DBConn.php');
 

@@ -39,6 +39,7 @@
     <table class="table mt-4">
         <?php
             if(isset($_POST['search_lecturer'])) {
+                $maKhoa = $_POST['khoa_selector'];
                 require_once('./Controllers/AdminController.php');
                 $controller = new AdminController();
                 $data = $controller->handleSearchLecturer();
@@ -52,7 +53,7 @@
                         <th>Ngày sinh</th>
                         <th>Giới tính</th>
                         <th>Chức vụ</th>
-                        <th></th>
+                        <th colspan='2'></th>
                     </tr>
                     </thead>
                     <tbody>";
@@ -67,7 +68,10 @@
                         echo '<td class="table-cell"> 
                             <button class="btn btn-light" type="button"><a href="?route=lecturer_info&param='.$row['maNhanVien'].'" class="nav-link">
                             Chi tiết
-                          </a></button>
+                            </a></button>
+                            <button class="btn btn-primary" type="button"><a href="?route=lecturer_class&param='.$row['maNhanVien'].'&maKhoa='.$maKhoa.'" class="nav-link">
+                            Phân công
+                            </a></button>
                             </td>';
                         echo '</tr>';
                         $index++;

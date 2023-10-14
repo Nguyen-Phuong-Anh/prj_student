@@ -86,6 +86,12 @@
             $model->updatePoint();
         }
 
+        public function handleDeletePoint() {
+            require_once('./Models/LecturerModel.php');
+            $model = new LecturerModel();
+            $model->deletePoint();
+        }
+
         public function handleAddPoint() {
             $maSV = $_GET['maSV'];
             $hocKy = $_POST['hocKy'];

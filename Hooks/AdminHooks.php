@@ -93,6 +93,30 @@
         return TRUE;
     }
 
+    function checkClassDuplicate($maLop, $conn) {
+        $sql = "SELECT * FROM lop WHERE maLop = ?;";
+        $stmt = mysqli_stmt_init($conn); 
+
+        if(!mysqli_stmt_prepare($stmt, $sql)) {
+            header("Location: ./");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "s",$maLop); //
+        
+        mysqli_stmt_execute($stmt);
+
+        $resultData = mysqli_stmt_get_result($stmt);
+        while ($row = mysqli_fetch_assoc($resultData)) {
+            if(isset($row['maLop'])) {
+                return FALSE;
+            }
+        }
+        mysqli_stmt_close($stmt);
+        
+        return TRUE;
+    }
+
     function hashPwd($password) {
         $hasedPwd = password_hash($password, PASSWORD_DEFAULT);
         return $hasedPwd;
@@ -112,10 +136,10 @@
         mysqli_stmt_close($stmt);
     }
 
-
-    function deleteStudentHPhan($maSV, $conn) {
+//check again
+    function deleteStudentHPhanAndClass($maSV, $conn) {
         //get mabd & delete
-        $sql = "SELECT maDSDK FROM hocphandk WHERE maSinhVien= ?;";
+        $sql = "SELECT maDSDK, maLop FROM hocphandk WHERE maSinhVien= ?;";
         $stmt1 = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt1, $sql)) { 
@@ -146,16 +170,12 @@
                 header("Location: ./");
                 exit();
             } else {
-                foreach ($results as $maHocPhi) {
-                    mysqli_stmt_bind_param($stmt2, "s", $maHocPhi);
+                foreach ($results as $maDSDK) {
+                    mysqli_stmt_bind_param($stmt2, "s", $maDSDK);
                     mysqli_stmt_execute($stmt2);
                 }
                 mysqli_stmt_close($stmt2);
             }
-            // mysqli_stmt_bind_param($stmt2, "s", $results['maDSDK']);
-            // mysqli_stmt_execute($stmt2);
-            
-            // mysqli_stmt_close($stmt2);
 
             $sql = "DELETE FROM hocphandk WHERE maDSDK = ?;";
             $stmt9 = mysqli_stmt_init($conn);
@@ -171,10 +191,21 @@
                 
                 mysqli_stmt_close($stmt9);
             }
-            // mysqli_stmt_bind_param($stmt9, "s", $results['maDSDK']);
-            // mysqli_stmt_execute($stmt9);
-            
-            // mysqli_stmt_close($stmt9);
+
+            $sql = "UPDATE lop SET siSo = siSo - ? WHERE maLop = ?;";
+            $stmt10 = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt10, $sql)) { 
+                header("Location: ./");
+                exit();
+            } else {
+                $student = 1;
+                foreach ($results as $maLop) {
+                    mysqli_stmt_bind_param($stmt10, "is", $student, $maLop);
+                    mysqli_stmt_execute($stmt10);
+                }
+                mysqli_stmt_close($stmt10);
+            }
         }
     }
 
@@ -217,10 +248,6 @@
                 }
                 mysqli_stmt_close($stmt4);
             }
-            // mysqli_stmt_bind_param($stmt4, "s", $results['maHocPhi']);
-            // mysqli_stmt_execute($stmt4);
-
-            // mysqli_stmt_close($stmt4);
 
             $sql = "DELETE FROM hocphi WHERE maHocPhi = ?;";
             $stmt7 = mysqli_stmt_init($conn);
@@ -236,10 +263,6 @@
                 
                 mysqli_stmt_close($stmt7);
             }
-            // mysqli_stmt_bind_param($stmt7, "s", $results['maHocPhi']);
-            // mysqli_stmt_execute($stmt7);
-
-            // mysqli_stmt_close($stmt7);
         }
     }
 
@@ -262,7 +285,6 @@
         // Fetch the result and store it as an associative array
         $results = array();
         while (mysqli_stmt_fetch($stmt5)) {
-            // $results['maBangDiem'] = $maBangDiem;
             $results[] = $maBangDiem;
         }
 
@@ -274,8 +296,6 @@
             $stmt6 = mysqli_stmt_init($conn);
     
             if(mysqli_stmt_prepare($stmt6, $sql1)) { 
-                // header("Location: ./");
-                // exit();
                 foreach ($results as $maBangDiem) {
                     mysqli_stmt_bind_param($stmt6, "s", $maBangDiem);
                     mysqli_stmt_execute($stmt6);
@@ -285,16 +305,11 @@
                 header("Location: ./");
                 exit();
             }
-            // mysqli_stmt_bind_param($stmt6, "s", $results['maBangDiem']);
-            // mysqli_stmt_execute($stmt6);
-            
 
             $sql1 = "DELETE FROM bangdiem WHERE maBangDiem = ?;";
             $stmt8 = mysqli_stmt_init($conn);
     
             if(mysqli_stmt_prepare($stmt8, $sql1)) { 
-                // header("Location: ./");
-                // exit();
                 foreach ($results as $maBangDiem) {
                     mysqli_stmt_bind_param($stmt8, "s", $maBangDiem);
                     mysqli_stmt_execute($stmt8);
@@ -302,8 +317,6 @@
                 
                 mysqli_stmt_close($stmt8);
             }
-            // mysqli_stmt_bind_param($stmt8, "s", $results['maBangDiem']);
-            // mysqli_stmt_execute($stmt8);
             
         }
     }
@@ -445,5 +458,145 @@
         mysqli_stmt_bind_param($stmt, "s", $maMH);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
+    }
+
+    function checkDeleteClass($arr, $conn) {
+        $sql = "SELECT maBangDiem FROM bangdiem WHERE maSinhVien= ? AND hocKy= ?;";
+        $stmt = mysqli_stmt_init($conn); 
+
+        if(!mysqli_stmt_prepare($stmt, $sql)) {
+            header("Location: ./");
+            exit();
+        }
+
+        foreach ($arr as $row) {
+            mysqli_stmt_bind_param($stmt, "ss", $row['maSinhVien'], $row['hocKy']);
+            mysqli_stmt_execute($stmt);
+
+            $resultData = mysqli_stmt_get_result($stmt);
+            while ($data = mysqli_fetch_assoc($resultData)) {
+                if(isset($data['maBangDiem'])) {
+                    return FALSE;
+                }
+            }
+        }
+
+        mysqli_stmt_close($stmt);
+        
+        return TRUE;
+    }
+
+    function prepareHPDK_Class($maLop, $conn) {
+        $sql = "SELECT maDSDK FROM chitiethocphandk WHERE maLop= ?;";
+        $stmt3 = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt3, $sql)) {         
+            header("Location: ./");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt3, "s", $maLop);
+        mysqli_stmt_execute($stmt3);
+        mysqli_stmt_store_result($stmt3);
+
+        mysqli_stmt_bind_result($stmt3, $maDSDK);
+
+        $rows = array();
+        while (mysqli_stmt_fetch($stmt3)) {
+            $rows[] = $maDSDK;
+        }
+        
+        mysqli_stmt_free_result($stmt3);
+        mysqli_stmt_close($stmt3);
+
+        //get masv, hk
+        $sql2 = "SELECT maSinhVien, hocKy FROM hocphandk WHERE maDSDK= ?;";
+        $stmt2 = mysqli_stmt_init($conn);
+
+        if (!mysqli_stmt_prepare($stmt2, $sql2)) {
+            header("Location: ./");
+            exit();
+        }
+
+        $array = array();
+        foreach ($rows as $row) {
+            mysqli_stmt_bind_param($stmt2, "s", $row);
+            mysqli_stmt_execute($stmt2);
+            
+            $resultData = mysqli_stmt_get_result($stmt2);
+            while ($data = mysqli_fetch_assoc($resultData)) {
+                $array[] = $data;
+            }
+        }
+        mysqli_stmt_close($stmt2);
+
+        return $array;
+    }
+
+    function updateHphi_Class($arr, $thanhTien, $conn) {
+        $sql = "SELECT maHocPhi FROM hocphi WHERE maSinhVien= ? AND hocKy=?;";
+        $stmt2 = mysqli_stmt_init($conn);
+
+        if (!mysqli_stmt_prepare($stmt2, $sql)) {
+            header("Location: ./");
+            exit();
+        }
+        
+        $array = array();
+        foreach ($arr as $row) {
+            mysqli_stmt_bind_param($stmt2, "ss", $row['maSinhVien'], $row['hocKy']);
+            mysqli_stmt_execute($stmt2);
+    
+            $resultData = mysqli_stmt_get_result($stmt2);
+            while ($data = mysqli_fetch_assoc($resultData)) {
+                $array[] = $data;
+            }
+        }
+        mysqli_stmt_close($stmt2);
+        
+        $sql = "UPDATE hocphi SET tongHocPhi = tongHocPhi - ? WHERE maHocPhi = ?;";
+        $stmt3 = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt3, $sql)) { 
+            header("Location: ./");
+            exit();
+        } else {
+            foreach ($array as $row) {
+                mysqli_stmt_bind_param($stmt3, "is", $thanhTien, $row['maHocPhi']);
+                mysqli_stmt_execute($stmt3);
+            }
+            mysqli_stmt_close($stmt3);
+        }
+
+        return $array;
+    }
+
+    function deleteCTHP_Class($array, $maHP, $conn) {
+        $sql1 = "DELETE FROM chitiethocphi WHERE maHocPhi = ? AND maHocPhan=?;";
+        $stmt2 = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt2, $sql1)) { 
+            header("Location: ./");
+            exit();
+        } else {
+            foreach ($array as $row) {
+                mysqli_stmt_bind_param($stmt2, "ss", $row['maHocPhi'], $maHP);
+                mysqli_stmt_execute($stmt2);
+            }
+            mysqli_stmt_close($stmt2);
+        }
+    }
+
+    function deleteCTHPDK_Class($maLop, $conn) {
+        $sql1 = "DELETE FROM chitiethocphandk WHERE maLop = ?;";
+        $stmt2 = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt2, $sql1)) { 
+            header("Location: ./");
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt2, "s", $maLop);
+        mysqli_stmt_execute($stmt2);
+        mysqli_stmt_close($stmt2);
     }
 ?>

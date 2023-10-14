@@ -1,24 +1,24 @@
 <?php 
     class AdminModel {
         public function getSearchAccount($search) {
-            require_once('./Config/DBConn.php');
-            $searchTerm = "%{$search}%";
+            require_once('./Config/DBConn.php'); //knoi db
+            $searchTerm = "%{$search}%"; //tim kiem gan dung
             $sql = "SELECT * FROM taikhoan WHERE tenTaiKhoan LIKE ?;";
-            $stmt = mysqli_stmt_init($conn);
+            $stmt = mysqli_stmt_init($conn); //dtg cbi thuc thi cau lenh truy van den db
 
             if(!mysqli_stmt_prepare($stmt, $sql)) { 
                 header("Location: ./");
                 exit();
             }
 
-            mysqli_stmt_bind_param($stmt, "s", $searchTerm);
+            mysqli_stmt_bind_param($stmt, "s", $searchTerm); //string s, int i
             mysqli_stmt_execute($stmt);
 
             $resultData = mysqli_stmt_get_result($stmt);
-            return $resultData;
-
             mysqli_stmt_close($stmt);
             $conn->close();
+
+            return $resultData;
         }
 
         public function addAccount($username, $password, $role) {
@@ -80,6 +80,32 @@
                 </script>";
             } else {
                 echo '<script>alert("Failed to make changes account")</script>';
+            }
+
+            mysqli_stmt_close($stmt);
+            
+            $conn->close();
+        }
+
+        public function deleteAccount($username) {
+            require('./Config/DBConn.php');
+
+            $sql = "DELETE FROM taikhoan WHERE tenTaiKhoan= ?;";
+            $stmt = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                header("Location: ./");
+                exit();
+            }
+            
+            mysqli_stmt_bind_param($stmt, "s", $username);
+            if(mysqli_stmt_execute($stmt)) {
+                echo '<script>alert("Successfully delete account")</script>';
+                echo "<script>
+                window.location = 'http://localhost/prj_student/?route=home';
+                </script>";
+            } else {
+                echo '<script>alert("Failed to delete account")</script>';
             }
 
             mysqli_stmt_close($stmt);
@@ -225,6 +251,37 @@
             $conn->close();
         }
 
+        public function addClass($maHP, $maLop, $tenLop, $siSo, $siSoToiDa, $thoiGian, $diaDiem) {
+            require('./Config/DBConn.php');
+            require_once('./Hooks/AdminHooks.php');
+
+            if(checkClassDuplicate($maLop, $conn)) {
+                $sql = "INSERT INTO lop (tenLop, siSo, siSoToiDa, maHocPhan, thoiGian, diaDiem) VALUES (?, ?, ?, ?, ?, ?);";
+                
+                $stmt = mysqli_stmt_init($conn);
+
+                if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                    header("Location: ./");
+                    exit();
+                }
+
+                mysqli_stmt_bind_param($stmt, "siisss", $tenLop, $siSo, $siSoToiDa, $maHP, $thoiGian, $diaDiem);
+
+                if(mysqli_stmt_execute($stmt)) {
+                    echo '<script>alert("Successfully added class")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=add_class';
+                    </script>";
+                } else {
+                    echo '<script>alert("Failed to add class")</script>';
+                }
+                mysqli_stmt_close($stmt);
+            } else {
+                echo '<script>alert("Class existed!")</script>';
+            }
+            $conn->close();
+        }
+
         public function getSearchStudent($maSV, $nienKhoa, $khoa) {
             require('./Config/DBConn.php');
             $searchmaSV = "%{$maSV}%";
@@ -302,6 +359,32 @@
             }
 
             mysqli_stmt_bind_param($stmt, "s", $khoa);
+            mysqli_stmt_execute($stmt);
+
+            $resultData = mysqli_stmt_get_result($stmt);
+            return $resultData;
+
+            mysqli_stmt_close($stmt);
+            $conn->close();
+        }
+
+        public function getSearchClass($maHP) {
+            if($maHP === '') {
+                echo '<script>alert("Please enter information!")</script>';
+                echo "<script>
+                window.location = 'http://localhost/prj_student/?route=class_list';
+                </script>";
+            }
+            require('./Config/DBConn.php');
+            $sql = "SELECT * FROM lop WHERE maHocPhan= ?;";
+            $stmt = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                header("Location: ./");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, "s", $maHP);
             mysqli_stmt_execute($stmt);
 
             $resultData = mysqli_stmt_get_result($stmt);
@@ -459,8 +542,10 @@
                 mysqli_stmt_bind_param($stmt, "ssssssssss",  $updateHoten, $updateNgaySinh, $updateGioiTinh, $updateDiaChi, $updateEmail, $updateTel, $updateNienKhoa, $updateKhoaSelector, $updateHocKy, $maSinhVien);
 
                 if (mysqli_stmt_execute($stmt)) {
-                    // echo '<script>alert("Update successful!")</script>';
-                    echo '<script>window.updateSuccessful = true;</script>';
+                    echo '<script>alert("Update successful!")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=student_list';
+                    </script>";
                 } else {
                     echo '<script>alert("Update failed!")</script>';
                 }
@@ -597,6 +682,48 @@
             $conn->close();
         }
 
+        public function updateClass() {
+            require('./Config/DBConn.php');
+
+            $maLop = $_POST['maLop'];
+            $tenLop = $_POST['tenLop'];
+            $siSoToiDa = $_POST['siSoToiDa'];
+            $maGV = $_POST['maGV'];
+            $thoiGian = $_POST['thoiGian'];
+            $diaDiem = $_POST['diaDiem'];
+
+            $stmt = mysqli_stmt_init($conn);
+            $sql = "UPDATE lop
+            SET
+                tenLop = ?,
+                siSoToiDa = ?,
+                maGV = ?,
+                thoiGian = ?,
+                diaDiem = ?
+            WHERE
+                maLop = ?;
+            ";
+            if (mysqli_stmt_prepare($stmt, $sql)) {
+                mysqli_stmt_bind_param($stmt, "ssssss", $tenLop, $siSoToiDa, $maGV, $thoiGian, $diaDiem, $maLop);
+
+                if (mysqli_stmt_execute($stmt)) {
+                    echo '<script>alert("Updated successfully!")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=class_list';
+                    </script>";
+                } else {
+                    echo '<script>alert("Update failed!")</script>';
+                }
+
+                mysqli_stmt_close($stmt);
+            } else {
+                header("Location: ./");
+                exit();
+            }
+            
+            $conn->close();
+        }
+
         public function deleteStudent($maSV) {
             require('./Config/DBConn.php');
             require_once('./Hooks/AdminHooks.php');
@@ -615,7 +742,7 @@
                 deleteAccount($maSV, $conn);
                 deleteStudentDiem($maSV, $conn);
                 deleteStudentHphi($maSV, $conn);
-                deleteStudentHPhan($maSV, $conn);
+                deleteStudentHPhanAndClass($maSV, $conn);
                 echo '<script>alert("Delete successful!")</script>';
                 echo "<script>
                 window.location = 'http://localhost/prj_student/?route=student_list';
@@ -696,6 +823,44 @@
             }
             
             mysqli_stmt_close($stmt);
+            $conn->close();
+        }
+
+        public function deleteClass() {
+            require('./Config/DBConn.php');
+            require_once('./Hooks/AdminHooks.php');
+            
+            $maHP = $_POST['maHocPhan_delete'];
+            $maLop = $_POST['maLop_delete'];
+            
+            $result = prepareHPDK_Class($maLop, $conn);
+
+            if(!checkDeleteClass($result, $conn)) {
+                echo '<script>alert("This class has started! Cannot delete it!")</script>';
+            } else {
+                $sql = "DELETE FROM lop WHERE maLop = ?;";
+                $stmt = mysqli_stmt_init($conn);
+    
+                if(!mysqli_stmt_prepare($stmt, $sql)) { 
+                    header("Location: ./");
+                    exit();
+                }
+    
+                mysqli_stmt_bind_param($stmt, "s", $maLop);
+                if (mysqli_stmt_execute($stmt)) {
+                    $thanhTien = getHPhiTin($maHP, $conn);
+                    $result1 = updateHphi_Class($result, $thanhTien, $conn);
+                    deleteCTHP_Class($result1, $maHP, $conn);
+                    deleteCTHPDK_Class($maLop, $conn);
+                    echo '<script>alert("Deleted successfully!")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=class_list';
+                    </script>";
+                } else {
+                    echo '<script>alert("Delete failed!")</script>';
+                }
+            }
+
             $conn->close();
         }
     }

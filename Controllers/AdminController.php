@@ -16,22 +16,37 @@
         public function showLecturerList() {
             require_once('./Views/admin/lecturer/lecturer_list.php');
         }
+
         public function showSubjectList() {
             require_once('./Views/admin/subject_list.php');
+        }
+        
+        public function showClassList() {
+            require_once('./Views/admin/class/class_list.php');
         }
 
         public function showSubjectInfo() {
             require_once('./Views/admin/subject_info.php');
         }
+
         public function showAddSubject() {
             require_once('./Views/admin/add_subject.php');
         }
+       
+        public function showAddClass() {
+            require_once('./Views/admin/class/add_class.php');
+        }
+
         public function showAddLecturer() {
             require_once('./Views/admin/lecturer/add_lecturer.php');
         }
 
         public function showLecturerInfo() {
             require_once('./Views/admin/lecturer/lecturer_info.php');
+        }
+
+        public function showLecturerAddClass() {
+            require_once('./Views/admin/lecturer/lecturer_class.php');
         }
 
         public function showTuitionList() {
@@ -45,7 +60,7 @@
         }
 
         public function handleSearchAccount() {
-            $search = $_POST['search'];
+            $search = $_POST['search']; //
             require_once('./Models/AdminModel.php');
             $model = new AdminModel();
             $data = $model->getSearchAccount($search);
@@ -75,6 +90,14 @@
             require_once('./Models/AdminModel.php');
             $model = new AdminModel();
             $model->changeAccount($username, $password, $role);
+        }
+
+        public function handleDeleteAccount() {
+            $username = $_POST['tenTK'];
+
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $model->deleteAccount($username);
         }
 
         public function showKhoa() {
@@ -145,6 +168,30 @@
                 $model->addSubject($maHocPhan, $khoa, $tenMonHoc, $soTinChi, $batBuoc, $hocPhiMotTin);
             }
         }
+        
+        public function handleAddClass() {
+            if(!$_POST['tenLop'] || !$_POST['subject_selector'] || !$_POST['siSoToiDa'] || !$_POST['thoiGian'] || !$_POST['diaDiem']) {
+                // echo '<script>alert("'.$_POST['tenLop'].'")</script>';
+                // echo '<script>alert("'.$_POST['siSo'].'")</script>';
+                // echo '<script>alert("'.$_POST['siSoToiDa'].'")</script>';
+                // echo '<script>alert("'.$_POST['thoiGian'].'")</script>';
+                // echo '<script>alert("'.$_POST['diaDiem'].'")</script>';
+                echo '<script>alert("Please fill all the information")</script>';
+                header("Location: ./");
+            } else {
+                $maHP = $_POST['subject_selector'];
+                $maLop = $_POST['maLop'];
+                $tenLop = $_POST['tenLop'];
+                $siSo = $_POST['siSo'];
+                $siSoToiDa = $_POST['siSoToiDa'];
+                $thoiGian = $_POST['thoiGian'];
+                $diaDiem = $_POST['diaDiem'];
+
+                require_once('./Models/AdminModel.php');
+                $model = new AdminModel();
+                $model->addClass($maHP, $maLop, $tenLop, $siSo, $siSoToiDa, $thoiGian, $diaDiem);
+            }
+        }
 
         //search
         public function handleSearchStudent() {
@@ -186,6 +233,17 @@
             require_once('./Models/AdminModel.php');
             $model = new AdminModel();
             $data = $model->getSearchSubject($khoa);
+            return $data;
+        }
+
+        public function handleSearchClass() {
+            if($_POST['subject_selector'] === 'Học phần') {
+                $maHP = '';
+            } else $maHP = $_POST['subject_selector'];
+
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $data = $model->getSearchClass($maHP);
             return $data;
         }
 
@@ -247,40 +305,51 @@
 
         public function handleUpdateStudent($oldInfo) {
             require_once('./Models/AdminModel.php');
-            $model = new AdminModel($oldInfo);
+            $model = new AdminModel();
             $model->updateStudent($oldInfo);
         }
         
         public function handleUpdateSubject($oldInfo) {
             require_once('./Models/AdminModel.php');
-            $model = new AdminModel($oldInfo);
+            $model = new AdminModel();
             $model->updateSubject($oldInfo);
+        }
+
+        public function handleUpdateClass() {
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $model->updateClass();
         }
 
         public function handleUpdateLecturer($oldInfo) {
             require_once('./Models/AdminModel.php');
-            $model = new AdminModel($oldInfo);
+            $model = new AdminModel();
             $model->updateLecturer($oldInfo);
         }
 
         public function handleDeleteStudent($maSV) {
             require_once('./Models/AdminModel.php');
-            $model = new AdminModel($maSV);
+            $model = new AdminModel();
             $model->deleteStudent($maSV);
         }
         
         public function handleDeleteSubject($maMH) {
             require_once('./Models/AdminModel.php');
-            $model = new AdminModel($maMH);
+            $model = new AdminModel();
             $model->deleteSubject($maMH);
+        }
+        
+        public function handleDeleteClass() {
+            require_once('./Models/AdminModel.php');
+            $model = new AdminModel();
+            $model->deleteClass();
         }
         
         public function handleDeleteLecturer($maNV) {
             require_once('./Models/AdminModel.php');
-            $model = new AdminModel($maNV);
+            $model = new AdminModel();
             $model->deleteLecturer($maNV);
         }
-
         
     }
 ?>

@@ -129,6 +129,22 @@
             </div>
         </li>
       </li>
+      <li>
+        <li class='mb-1'>
+            <button class='btn btn-toggle text-white align-items-center rounded collapsed' data-bs-toggle='collapse' data-bs-target='#class-collapse' aria-expanded='false'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-archive-fill" viewBox="0 0 20 20">
+              <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
+            </svg>
+              Quản lý lớp
+            </button>
+            <div class='collapse text-white' id='class-collapse'>
+            <ul class='btn-toggle-nav list-unstyled fw-normal pb-1 small'>
+                <li><a href='.?route=class_list' class='nav-link text-white rounded'>Danh sách lớp</a></li>
+                <li><a href='.?route=add_class' class='nav-link text-white rounded'>Thêm lớp</a></li>
+            </ul>
+            </div>
+        </li>
+      </li>
     </ul>
     <hr>
     <div>
@@ -180,6 +196,12 @@
           $controller->showLecturerInfo();
           break;
 
+        case 'lecturer_class':
+          require_once('./Controllers/AdminController.php');
+          $controller = new AdminController();
+          $controller->showLecturerAddClass();
+          break;
+
         case 'tuition':
           require_once('./Controllers/AdminController.php');
           $controller = new AdminController();
@@ -205,8 +227,15 @@
           $controller = new AdminController();
           $controller->showAddSubject();
           break;
-        default:
-          
+        case 'class_list':
+          require_once('./Controllers/AdminController.php');
+          $controller = new AdminController();
+          $controller->showClassList();
+          break;
+        case 'add_class':
+          require_once('./Controllers/AdminController.php');
+          $controller = new AdminController();
+          $controller->showAddClass();
           break;
       }
       ?>

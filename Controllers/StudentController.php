@@ -87,7 +87,7 @@
         }
 
         public function handleRegistSbj($maSV, $maKhoa) {
-            if($_POST['hocky_selector'] === '' || $_POST['lopDK'] === '' || $_POST['hocphanDK']) {
+            if($_POST['hocky_selector'] === '' || $_POST['lopDK'] === '' || $_POST['hocphanDK'] === '') {
                 echo '<script>alert("Please fill all the information")</script>';
                 header("Location: ./");
             } else {

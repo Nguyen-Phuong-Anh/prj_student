@@ -7,16 +7,16 @@
             <form class="input-group mb-3" action="" method="post">
                 <div class="me-3"><input name="search" type="text" class="form-control" placeholder="Search..."></div>
                 <div class="input-group-append">
-                    <button name="submit_search" class="btn btn-primary" type="submit">Search</button>
+                    <button name="submit_search" class="btn btn-primary" type="submit">Search</button> //tim kiem tai khoan
                 </div>
             </form>
             <table class="table mt-4">
                 <?php
-                    if(isset($_POST['submit_search'])) {
+                    if(isset($_POST['submit_search'])) { //tim kiem tai khoan
                         if(!empty($_POST['search'])) {
-                            require_once('./Controllers/AdminController.php');
-                            $controller = new AdminController();
-                            $data = $controller->handleSearchAccount();
+                            require_once('./Controllers/AdminController.php'); //mvc -> controller (logic) -> model (tuogn tac db)
+                            $controller = new AdminController(); //tao doi tuong controller
+                            $data = $controller->handleSearchAccount(); //goi den phuong thuc 
                             if(isset($data)) {
                                 $index = 0;
                                 echo "<thead>
@@ -28,14 +28,14 @@
                                 </tr>
                                 </thead>
                                 <tbody>";
-                                while($row = mysqli_fetch_assoc($data)) {
+                                while($row = mysqli_fetch_assoc($data)) { 
                                     echo '<tr>';
                                     echo"<td class='ta  ble-cell'>".$index."</td>";
                                     echo"<td class='table-cell'>".$row["tenTaiKhoan"]."</td>";
                                     echo"<td class='table-cell'>".$row["maVaiTro"]."</td>";
                                     echo '<td class="table-cell"> 
                                     <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#userModal'.$row['tenTaiKhoan'].'">Sửa</button>
-                                    <button class="btn btn-danger" type="button">Xóa</button>
+                                    <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal'.$row['tenTaiKhoan'].'">Xóa</button>
                                     </td>';
                                     echo '</tr>';
                                     echo 
@@ -55,13 +55,35 @@
                                                         <input type="text" class="form-control w-50" name="role" value="'.$row["maVaiTro"].'">
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Đóng</button>
                                                         <button type="submit" name="save_change" class="btn btn-primary">Lưu thay đổi</button>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>';
+                                    echo '
+                                    <div class="modal fade" id="deleteUserModal'.$row['tenTaiKhoan'].'" tabindex="-1" aria-labelledby="deleteUserModal'.$row['tenTaiKhoan'].'" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="deleteUserModal'.$row['tenTaiKhoan'].'">Delete Confirm</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                            <form action="" method="post">
+                                                <div class="modal-body">
+                                                    Do you want to delete this account?
+                                                    <input type="hidden" value="'.$row["tenTaiKhoan"].'" name="tenTK" >
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                    <button class="btn btn-danger" type="submit" name="delete_account" >Xóa</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    ';
                                     $index++;
                                 }
                                 echo "</tbody>";
@@ -108,5 +130,9 @@
         require_once('./Controllers/AdminController.php');
         $controller = new AdminController();
         $controller->handleChangeAccount();
+    } else if(isset($_POST['delete_account'])) {
+        require_once('./Controllers/AdminController.php');
+        $controller = new AdminController();
+        $controller->handleDeleteAccount();
     }
 ?>  

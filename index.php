@@ -14,7 +14,7 @@
         
         case 'home': case 'add_student': case 'student_list': case 'student_info': 
             case 'lecturer_list': case 'lecturer_info': case 'add_lecturer': 
-                case 'tuition': case 'tuition_info': case 'subject_list': case 'subject_info': case 'add_subject':
+                case 'tuition': case 'tuition_info': case 'subject_list': case 'subject_info': case 'add_subject': case 'class_list': case 'add_class': case 'lecturer_class':
             require_once('./Controllers/Controller.php');
             $controller = new Controller();
             $controller->showHome();
