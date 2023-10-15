@@ -90,7 +90,7 @@
         <button name="change_stdInfo" type="submit" class="btn btn-primary">Lưu thay đổi</button>
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
     </div>
-</form>t
+</form>
 
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">

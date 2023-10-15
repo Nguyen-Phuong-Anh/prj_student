@@ -124,8 +124,9 @@
     
                 require_once('./Models/AdminModel.php');
                 $model = new AdminModel();
-                $model->addStudent($maSV, $khoa, $hocKy, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $email, $tel);
-                $model->addAccount($maSV, $maSV, '103');
+                if($model->addStudent($maSV, $khoa, $hocKy, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $email, $tel)) {
+                    $model->addAccount($maSV, $maSV, '103');
+                }
             }
         }
 

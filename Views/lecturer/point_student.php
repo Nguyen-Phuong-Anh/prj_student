@@ -71,6 +71,11 @@
                                     <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deletePointModal'.$row['maHocPhan'].'">Xóa</button>
                                     </td>'
                                     ;
+                            } else {
+                                echo '<td class="table-cell">
+                                    <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deletePointModal'.$row['maHocPhan'].'">Xóa</button>
+                                    </td>'
+                                    ;
                             }
                             echo '</tr>';
                             $index++;
@@ -109,6 +114,30 @@
                                         </div>
                                     </div>
                                 </div>';
+                                echo '
+                                <div class="modal fade" id="deletePointModal'.$row['maHocPhan'].'" tabindex="-1" aria-labelledby="deletePointModal'.$row['maHocPhan'].'" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="deletePointModal'.$row['maHocPhan'].'">Delete Confirm</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                        <form action="" method="post">
+                                            <div class="modal-body">
+                                                Do you want to delete this student point?
+                                                <input type="hidden" value="'.$row["maBangDiem"].'" name="maBD_delete" >
+                                                <input type="hidden" value="'.$row["maHocPhan"].'" name="maHP_delete" >
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                <button class="btn btn-danger" type="submit" name="delete_point" >Xóa</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    </div>
+                                </div>
+                                ';
+                            } else {
                                 echo '
                                 <div class="modal fade" id="deletePointModal'.$row['maHocPhan'].'" tabindex="-1" aria-labelledby="deletePointModal'.$row['maHocPhan'].'" aria-hidden="true">
                                     <div class="modal-dialog">

@@ -162,7 +162,7 @@
 //check again
     function deleteStudentHPhanAndClass($maSV, $conn) {
         //get mabd & delete
-        $sql = "SELECT maDSDK, maLop FROM hocphandk WHERE maSinhVien= ?;";
+        $sql = "SELECT maDSDK FROM hocphandk WHERE maSinhVien= ?;";
         $stmt1 = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt1, $sql)) { 
@@ -184,6 +184,26 @@
 
         mysqli_stmt_free_result($stmt1);
         mysqli_stmt_close($stmt1);
+
+        //get malop
+        $sql = "SELECT maLop FROM chitiethocphandk WHERE maDSDK= ?;";
+        $stmt11 = mysqli_stmt_init($conn);
+
+        $result2 = array();
+        if(!mysqli_stmt_prepare($stmt11, $sql)) { 
+            header("Location: ./");
+            exit();
+        } else {
+            foreach ($results as $maDSDK) {
+                mysqli_stmt_bind_param($stmt11, "s", $maDSDK);
+                mysqli_stmt_execute($stmt11);
+                $resultData = mysqli_stmt_get_result($stmt11);
+                while ($data = mysqli_fetch_assoc($resultData)) {
+                    $result2[] = $data;
+                }
+            }
+        }
+        mysqli_stmt_close($stmt11);
 
         if(!empty($results)) {
             $sql = "DELETE FROM chitiethocphandk WHERE maDSDK = ?;";
@@ -223,7 +243,7 @@
                 exit();
             } else {
                 $student = 1;
-                foreach ($results as $maLop) {
+                foreach ($result2 as $maLop) {
                     mysqli_stmt_bind_param($stmt10, "is", $student, $maLop);
                     mysqli_stmt_execute($stmt10);
                 }
@@ -271,6 +291,7 @@
                 }
                 mysqli_stmt_close($stmt4);
             }
+            echo '<script>alert("5")</script>';
 
             $sql = "DELETE FROM hocphi WHERE maHocPhi = ?;";
             $stmt7 = mysqli_stmt_init($conn);

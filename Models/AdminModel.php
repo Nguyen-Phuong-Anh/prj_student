@@ -145,10 +145,10 @@
             mysqli_stmt_execute($stmt);
 
             $resultData = mysqli_stmt_get_result($stmt);
-            return $resultData;
-
             mysqli_stmt_close($stmt);
             $conn->close();
+            
+            return $resultData;
         }
         
         public function addStudent($maSV, $khoa, $hocKy, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $email, $tel) {
@@ -179,11 +179,12 @@
                 }
     
                 mysqli_stmt_close($stmt);
+                $conn->close();
+                return TRUE;
             } else {
                 echo '<script>alert("Student existed!")</script>';
+                return FALSE;
             }
-            
-            $conn->close();
         }
 
         public function addLecturer($maNV, $khoa, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $chucVu, $email, $tel) {
@@ -341,10 +342,10 @@
             mysqli_stmt_bind_param($stmt, "sss", $searchmaSV, $searchnienKhoa, $searchkhoa);
             mysqli_stmt_execute($stmt);
             
+            $resultData = mysqli_stmt_get_result($stmt);
             mysqli_stmt_close($stmt);
             $conn->close();
 
-            $resultData = mysqli_stmt_get_result($stmt);
             return $resultData;
         }
 
@@ -424,10 +425,10 @@
             mysqli_stmt_execute($stmt);
 
             $resultData = mysqli_stmt_get_result($stmt);
-            return $resultData;
-
             mysqli_stmt_close($stmt);
             $conn->close();
+            
+            return $resultData;
         }
 
         public function getSearchLecturer($maSV, $khoa) {
@@ -784,12 +785,13 @@
                 echo "<script>
                 window.location = 'http://localhost/prj_student/?route=student_list';
                 </script>";
+                mysqli_stmt_close($stmt);
+                $conn->close();
             } else {
                 echo '<script>alert("Delete failed!")</script>';
-            }
-            
-            mysqli_stmt_close($stmt);
-            $conn->close();
+                mysqli_stmt_close($stmt);
+                $conn->close();
+            }  
         }
 
         public function deleteLecturer($maNV) {
