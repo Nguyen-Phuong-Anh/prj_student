@@ -13,6 +13,7 @@
 </style>
 
 <div class="insideBody">
+    <h2 class="mt-4">Tìm kiếm Giảng viên</h2>
     <form action="" method="post" class="wrapper ml-4">
         <div>
             <div class="form-group mt-3">

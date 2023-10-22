@@ -13,6 +13,7 @@
 </style>
 
 <div class="insideBody">
+    <h2 class="mt-4">Danh sách học phần</h2>
     <form action="" method="post">
         <div class="form-group mt-3">
             <label class="pb-2" for="khoa_selector">Khoa</label>

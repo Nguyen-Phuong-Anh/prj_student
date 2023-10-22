@@ -43,10 +43,17 @@
                 mysqli_stmt_bind_param($stmt, "ss", $hashedPwd, $tenTK);
 
                 if(mysqli_stmt_execute($stmt)) {
-                    echo '<script>alert("Update successfully")</script>';
-                    echo "<script>
-                    window.location = 'http://localhost/prj_student/?route=pwd_student';
-                    </script>";
+                    if($_SESSION['maVaiTro'] === '103') {
+                        echo '<script>alert("Update successfully")</script>';
+                        echo "<script>
+                        window.location = 'http://localhost/prj_student/?route=pwd_student';
+                        </script>";
+                    } else {
+                        echo '<script>alert("Update successfully")</script>';
+                        echo "<script>
+                        window.location = 'http://localhost/prj_student/?route=pwd_lecturer';
+                        </script>";
+                    }
                 } else {
                     echo '<script>alert("Failed to make changes!")</script>';
                 }
@@ -55,10 +62,17 @@
                 
                 $conn->close();
             } else {
-                echo '<script>alert("Password and password re-entered are not similar!")</script>';
-                echo "<script>
-                window.location = 'http://localhost/prj_student/?route=pwd_student';
-                </script>";
+                if($_SESSION['maVaiTro'] === '103') {
+                    echo '<script>alert("Password and password re-entered are not similar!")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=pwd_student';
+                    </script>";
+                } else {
+                    echo '<script>alert("Password and password re-entered are not similar!")</script>';
+                    echo "<script>
+                    window.location = 'http://localhost/prj_student/?route=pwd_lecturer';
+                    </script>";
+                }
             }
         }
     }

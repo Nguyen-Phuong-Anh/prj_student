@@ -13,6 +13,7 @@
 </style>
 
 <div class="insideBody">
+    <h2 class="mt-4">Danh sách lớp</h2> 
     <div>
         <form action="" method="post">
             <div class="form-group mt-3">
@@ -33,6 +34,7 @@
     </div>
 
     <form class="mt-4" action="" method="post">
+        <label class="pb-2" for="subject_selector">Danh sách học phần</label>
         <select name="subject_selector" class="form-select" aria-label="Subject select">
             <?php
                 if(isset($_POST['search_subject'])) {

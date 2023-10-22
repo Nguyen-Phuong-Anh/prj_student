@@ -83,6 +83,7 @@
             </select>
         </div>
         <table class="table mt-4">
+            <h2 class="mt-3">Lớp</h2>
             <?php
                 if(isset($array[2])) {
                     $index = 0;

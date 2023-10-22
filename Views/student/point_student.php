@@ -14,6 +14,7 @@
 
 
 <div class="insideBody">
+    <h2 class="mt-4">Điểm</h2>
     <form action="" method="post">
         <div class="form-group mt-2">
             <label class="pb-2" for="hocky_selector">Học kỳ</label>
