@@ -94,7 +94,9 @@
                 require_once('./Models/StudentModel.php');
                 $model = new StudentModel();
                 $result = $model->AddRegistSubject($maSV, $_POST['hocky_selector'], $_POST['lopDK'], $_POST['hocphanDK']);
-                if($result) {
+                print($result);
+                if($result != "") {
+                    print('flkjfdlsfjfg');
                     $model->AddRegistSubjectInDetail($result, $_POST['hocphanDK'], $_POST['lopDK']);
                     //them vao hoc phi
                     $maHPhi = $model->AddInTuition($maSV, $maKhoa, $_POST['hocky_selector']);

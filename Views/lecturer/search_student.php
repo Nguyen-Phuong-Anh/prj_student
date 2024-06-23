@@ -21,6 +21,15 @@
                 value="<?php
                 foreach ($array[1] as $row) {
                     if($row['maKhoa'] === $array[0][0]['maKhoa']) {
+                        echo $row['tenKhoa'];
+                        break;
+                    }
+                }
+            ?>" >
+            <input readonly type="hidden" class="form-control" name="khoa" 
+                value="<?php
+                foreach ($array[1] as $row) {
+                    if($row['maKhoa'] === $array[0][0]['maKhoa']) {
                         echo $row['maKhoa'];
                         break;
                     }

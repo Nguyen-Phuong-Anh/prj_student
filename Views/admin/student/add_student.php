@@ -35,6 +35,10 @@
                     echo '<input readonly type="text" class="form-control" name="hocKy" value="Năm học '.$currentYear.' - '.++$currentYear.' - Học kỳ 1" >';
                 ?>
             </div>  <div class="form-group mt-3">
+                <label class="pb-2" for="nienKhoa">Niên khóa</label>
+                <input type="text" class="form-control" name="nienKhoa" placeholder="VD: 74" >
+            </div>
+            </div>  <div class="form-group mt-3">
                 <label class="pb-2" for="hoTen">Họ và Tên</label>
                 <input type="text" class="form-control" name="hoTen" placeholder="Họ và Tên" >
             </div>
@@ -76,6 +80,7 @@
         $controller = new AdminController();
         $controller->handleAddStudent();
     } else {
+        $_POST['nienKhoa'] = '';
         $_POST['maSV'] = '';
         $_POST['hoTen'] = '';
         $_POST['diaChi'] = '';

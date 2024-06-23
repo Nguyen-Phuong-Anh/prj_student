@@ -28,10 +28,10 @@
                 <?php
                     while ($row =mysqli_fetch_assoc($array[1])) {
                         if($row['maKhoa'] == $array[0][0]['maKhoa']) {
-                            echo '<option selected="selected" value="'.$row['maKhoa'].'">'.$row['tenKhoa'].' - '.$row['maKhoa'].'</option>';
+                            echo '<option selected="selected" value="'.$row['maKhoa'].'">'.$row['tenKhoa'].'</option>';
 
                         } else {
-                            echo '<option value="'.$row['maKhoa'].'">'.$row['tenKhoa'].' - '.$row['maKhoa'].'</option>';
+                            echo '<option value="'.$row['maKhoa'].'">'.$row['tenKhoa'].'</option>';
                         }
                     }
                 ?>

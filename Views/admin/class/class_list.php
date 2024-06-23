@@ -66,7 +66,7 @@
                     echo "<thead>
                     <tr>
                         <th>#</th>
-                        <th>Tên lớp</th>
+                        <th>Mã lớp</th>
                         <th>Sĩ số</th>
                         <th>Sĩ số tối đa</th> 
                         <th colspan='2'></th>
@@ -76,7 +76,7 @@
                     while($row = mysqli_fetch_assoc($data)) {
                         echo '<tr>';
                         echo"<td class='table-cell'>".$index."</td>";
-                        echo"<td class='table-cell'>".$row["tenLop"]."</td>";
+                        echo"<td class='table-cell'>".$row["maLop"]."</td>";
                         echo"<td class='table-cell'>".$row["siSo"]."</td>";
                         echo"<td class='table-cell'>".$row["siSoToiDa"]."</td>";
                         echo '<td class="table-cell"> 
@@ -97,8 +97,6 @@
                                             <label class="pb-2" for="maLop">Mã lớp</label>
                                             <input type="text" class="form-control w-50" name="maLop" readonly value="'.$row["maLop"].'">
                                             <label class="pb-2" for="tenLop">Tên lớp</label>
-                                            <input type="text" class="form-control w-50" name="tenLop" value="'.$row["tenLop"].'">
-                                            <label class="pb-2" for="siSo">Sĩ số</label>
                                             <input type="text" readonly class="form-control w-50" name="siSo" value="'.$row["siSo"].'">
                                             <label class="pb-2" for="siSoToiDa">Sĩ số tối đa</label>
                                             <input type="number" class="form-control w-50" name="siSoToiDa" value="'.$row["siSoToiDa"].'">

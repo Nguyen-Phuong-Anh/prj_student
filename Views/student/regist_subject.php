@@ -107,7 +107,7 @@
                     foreach ($arr as $row) {
                         echo '<tr>';
                         echo"<td class='table-cell'>".$index."</td>";
-                        echo"<td class='table-cell'>".$row[0]["tenLop"]."</td>";
+                        echo"<td class='table-cell'>".$row[0]["maLop"]."</td>";
                         echo"<td class='table-cell'>".$row[0]["maHocPhan"]."</td>";
                         echo"<td class='table-cell'>".$row[0]["siSo"]."</td>";
                         echo"<td class='table-cell'>".$row[0]["siSoToiDa"]."</td>";

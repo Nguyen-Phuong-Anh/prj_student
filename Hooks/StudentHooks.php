@@ -3,7 +3,7 @@
         $sql1 = "SELECT * FROM chitiethocphandk WHERE maHocPhan= ?;";
         $stmt1 = mysqli_stmt_init($conn); //create a beforehand statement to ensure the security
 
-        if(!mysqli_stmt_prepare($stmt1, $sql1)) { //Prepares an SQL statement for execution -> return a boolean value
+        if(!mysqli_stmt_prepare($stmt1, $sql1)) { 
             header("Location: ./");
             exit();
         }

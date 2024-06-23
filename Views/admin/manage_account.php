@@ -5,7 +5,9 @@
         </button>
         <div class='collapse show text-black mt-3 ms-3' id='search_account-collapse'>
             <form class="input-group mb-3" action="" method="post">
-                <div class="me-3"><input name="search" type="text" class="form-control" placeholder="Search..."></div>
+                <div class="me-3">
+                    <input name="search" type="text" class="form-control" placeholder="Search...">
+                </div>
                 <div class="input-group-append">
                     <button name="submit_search" class="btn btn-primary" type="submit">Search</button>
                 </div>

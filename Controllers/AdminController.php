@@ -115,6 +115,7 @@
                 $maSV = $_POST['maSV'];
                 $khoa = $_POST['khoa_selector'];
                 $hocKy = $_POST['hocKy'];
+                $nienKhoa = $_POST['nienKhoa'];
                 $hoTen = $_POST['hoTen'];
                 $ngaySinh = $_POST['ngaySinh'];
                 $gioiTinh = $_POST['gioiTinh'];
@@ -124,7 +125,7 @@
     
                 require_once('./Models/AdminModel.php');
                 $model = new AdminModel();
-                if($model->addStudent($maSV, $khoa, $hocKy, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $email, $tel)) {
+                if($model->addStudent($maSV, $khoa, $hocKy, $nienKhoa, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $email, $tel)) {
                     $model->addAccount($maSV, $maSV, '103');
                 }
             }
@@ -171,13 +172,12 @@
         }
         
         public function handleAddClass() {
-            if(!$_POST['tenLop'] || !$_POST['subject_selector'] || !$_POST['siSoToiDa'] || !$_POST['thoiGian'] || !$_POST['diaDiem']) {
+            if(!$_POST['maLop'] || !$_POST['subject_selector'] || !$_POST['siSoToiDa'] || !$_POST['thoiGian'] || !$_POST['diaDiem']) {
                 echo '<script>alert("Please fill all the information")</script>';
                 header("Location: ./");
             } else {
                 $maHP = $_POST['subject_selector'];
                 $maLop = $_POST['maLop'];
-                $tenLop = $_POST['tenLop'];
                 $siSo = $_POST['siSo'];
                 $siSoToiDa = $_POST['siSoToiDa'];
                 $thoiGian = $_POST['thoiGian'];
@@ -185,7 +185,7 @@
 
                 require_once('./Models/AdminModel.php');
                 $model = new AdminModel();
-                $model->addClass($maHP, $maLop, $tenLop, $siSo, $siSoToiDa, $thoiGian, $diaDiem);
+                $model->addClass($maHP, $maLop, $siSo, $siSoToiDa, $thoiGian, $diaDiem);
             }
         }
 

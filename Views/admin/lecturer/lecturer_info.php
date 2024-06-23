@@ -99,7 +99,7 @@
                     while($row = mysqli_fetch_assoc($array[2])) {
                         echo '<tr>';
                         echo"<td class='table-cell'>".$index."</td>";
-                        echo"<td class='table-cell'>".$row["tenLop"]."</td>";
+                        echo"<td class='table-cell'>".$row["maLop"]."</td>";
                         echo"<td class='table-cell'>".$row["siSo"]."</td>";
                         echo"<td class='table-cell'>".$row["maHocPhan"]."</td>";
                         echo '</tr>';

@@ -202,7 +202,7 @@
             require('./Config/DBConn.php');
             require_once('./Hooks/StudentHooks.php');
             
-            $maDSDK;
+            $maDSDK = "";
             if(checkDuplicateRegistSbj($maSV, $hocKy, $conn)) { 
                 // add
                 if(checkMatchClass($malop, $maHP, $conn)) {
@@ -219,7 +219,6 @@
                         echo '<script>alert("Failed to add subject")</script>';
                     } else {
                         $sql = "SELECT * FROM hocphandk WHERE maSinhVien= ? AND hocKy= ?;";
-                        if(!$stmt) $stmt = mysqli_stmt_init($conn);
             
                         if(!mysqli_stmt_prepare($stmt, $sql)) { 
                             header("Location: ./");
@@ -237,7 +236,6 @@
                         mysqli_stmt_close($stmt);
             
                         $conn->close();
-                        return $maDSDK;
                     }
                 } else {
                     echo '<script>alert("Wrong class!")</script>';
@@ -272,9 +270,9 @@
                     mysqli_stmt_close($stmt);
         
                     $conn->close();
-                    return $maDSDK;
                 }
             }
+            return $maDSDK;
         }
 
         public function AddRegistSubjectInDetail($maDSDK, $maHocPhan, $maLop) {
@@ -291,7 +289,7 @@
                     exit();
                 }
 
-                mysqli_stmt_bind_param($stmt, "sss", $maDSDK, $maHocPhan, $maLop);
+                mysqli_stmt_bind_param($stmt, "iss", $maDSDK, $maHocPhan, $maLop);
                 if(!mysqli_stmt_execute($stmt)) {
                     echo '<script>alert("Failed to add subject")</script>';
                 } else {

@@ -22,7 +22,16 @@
     <form action="" method="post">
         <div class="form-group mt-2">
             <label class="pb-2" for="khoa">Khoa</label>
-            <input readonly type="text" class="form-control" name="khoa" 
+            <input readonly type="text" class="form-control" name="tenKhoa" 
+                value="<?php
+                foreach ($array[1] as $row) {
+                    if($row['maKhoa'] === $array[0][0]['maKhoa']) {
+                        echo $row['tenKhoa'];
+                        break;
+                    }
+                }
+            ?>" >
+            <input readonly type="hidden" class="form-control" name="khoa" 
                 value="<?php
                 foreach ($array[1] as $row) {
                     if($row['maKhoa'] === $array[0][0]['maKhoa']) {

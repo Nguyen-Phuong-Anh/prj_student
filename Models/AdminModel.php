@@ -151,14 +151,14 @@
             return $resultData;
         }
         
-        public function addStudent($maSV, $khoa, $hocKy, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $email, $tel) {
+        public function addStudent($maSV, $khoa, $hocKy, $nienKhoa, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $email, $tel) {
             require('./Config/DBConn.php');
             require_once('./Hooks/AdminHooks.php');
 
             //check duplicate
             if(checkStudentDuplicate($maSV, $conn)) { 
                 // add
-                $sql = "INSERT INTO sinhvien (tenTaiKhoan, maSinhVien, maKhoa, khoa, hocKyHienTai, hoTen, ngaySinh, gioiTinh, diaChi, email, soDienThoai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                $sql = "INSERT INTO sinhvien (maSinhVien, maKhoa, khoa, hocKyHienTai, hoTen, ngaySinh, gioiTinh, diaChi, email, soDienThoai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
                 $stmt = mysqli_stmt_init($conn);
 
                 if(!mysqli_stmt_prepare($stmt, $sql)) { 
@@ -166,8 +166,7 @@
                     exit();
                 }
 
-                $nienKhoa = '74';
-                mysqli_stmt_bind_param($stmt, "sssssssssss", $maSV, $maSV, $khoa, $nienKhoa, $hocKy, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $email, $tel);
+                mysqli_stmt_bind_param($stmt, "ssssssssss", $maSV, $khoa, $nienKhoa, $hocKy, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $email, $tel);
 
                 if(mysqli_stmt_execute($stmt)) {
                     echo '<script>alert("Successfully added student")</script>';
@@ -194,7 +193,7 @@
             //check duplicate
             if(checkLecturerDuplicate($maNV, $conn)) { 
                 // add
-                $sql = "INSERT INTO giangvien (tenTaiKhoan, maNhanVien, maKhoa, hoTen, ngaySinh, gioiTinh, diaChi, chucVu, email, soDienThoai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                $sql = "INSERT INTO giangvien (maNhanVien, maKhoa, hoTen, ngaySinh, gioiTinh, diaChi, chucVu, email, soDienThoai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
                 $stmt = mysqli_stmt_init($conn);
 
                 if(!mysqli_stmt_prepare($stmt, $sql)) { 
@@ -202,7 +201,7 @@
                     exit();
                 }
 
-                mysqli_stmt_bind_param($stmt, "ssssssssss", $maNV, $maNV, $khoa, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $chucVu, $email, $tel);
+                mysqli_stmt_bind_param($stmt, "sssssssss", $maNV, $khoa, $hoTen, $ngaySinh, $gioiTinh, $diaChi, $chucVu, $email, $tel);
 
                 if(mysqli_stmt_execute($stmt)) {
                     echo '<script>alert("Successfully added lecturer")</script>';
@@ -288,12 +287,12 @@
             $conn->close();
         }
 
-        public function addClass($maHP, $maLop, $tenLop, $siSo, $siSoToiDa, $thoiGian, $diaDiem) {
+        public function addClass($maHP, $maLop, $siSo, $siSoToiDa, $thoiGian, $diaDiem) {
             require('./Config/DBConn.php');
             require_once('./Hooks/AdminHooks.php');
 
             if(checkClassDuplicate($maLop, $conn)) {
-                $sql = "INSERT INTO lop (tenLop, siSo, siSoToiDa, maHocPhan, thoiGian, diaDiem) VALUES (?, ?, ?, ?, ?, ?);";
+                $sql = "INSERT INTO lop (maLop, siSo, siSoToiDa, maHocPhan, thoiGian, diaDiem) VALUES (?, ?, ?, ?, ?, ?);";
                 
                 $stmt = mysqli_stmt_init($conn);
 
@@ -302,7 +301,7 @@
                     exit();
                 }
 
-                mysqli_stmt_bind_param($stmt, "siisss", $tenLop, $siSo, $siSoToiDa, $maHP, $thoiGian, $diaDiem);
+                mysqli_stmt_bind_param($stmt, "siisss", $maLop, $siSo, $siSoToiDa, $maHP, $thoiGian, $diaDiem);
 
                 if(mysqli_stmt_execute($stmt)) {
                     echo '<script>alert("Successfully added class")</script>';
@@ -600,7 +599,7 @@
         public function updateLecturer($oldInfo) {
             require('./Config/DBConn.php');
             $hoTen = isset($_POST['hoTen']) ? $_POST['hoTen'] : $oldInfo[0]['hoTen'];
-            $maKhoa = isset($_POST['maKhoa']) ? $_POST['maKhoa'] : $oldInfo[0]['maKhoa'];
+            $maKhoa = isset($_POST['khoa_selector']) ? $_POST['khoa_selector'] : $oldInfo[0]['maKhoa'];
             $ngaySinh = isset($_POST['ngaySinh']) ? $_POST['ngaySinh'] : $oldInfo[0]['ngaySinh'];
             $gioiTinh = isset($_POST['gioiTinh']) ? $_POST['gioiTinh'] : $oldInfo[0]['gioiTinh'];
             $diaChi = isset($_POST['diaChi']) ? $_POST['diaChi'] : $oldInfo[0]['diaChi'];
@@ -724,7 +723,6 @@
             require('./Config/DBConn.php');
 
             $maLop = $_POST['maLop'];
-            $tenLop = $_POST['tenLop'];
             $siSoToiDa = $_POST['siSoToiDa'];
             $maGV = $_POST['maGV'];
             $thoiGian = $_POST['thoiGian'];
@@ -733,7 +731,6 @@
             $stmt = mysqli_stmt_init($conn);
             $sql = "UPDATE lop
             SET
-                tenLop = ?,
                 siSoToiDa = ?,
                 maGV = ?,
                 thoiGian = ?,
@@ -742,7 +739,7 @@
                 maLop = ?;
             ";
             if (mysqli_stmt_prepare($stmt, $sql)) {
-                mysqli_stmt_bind_param($stmt, "ssssss", $tenLop, $siSoToiDa, $maGV, $thoiGian, $diaDiem, $maLop);
+                mysqli_stmt_bind_param($stmt, "sssss", $siSoToiDa, $maGV, $thoiGian, $diaDiem, $maLop);
 
                 if (mysqli_stmt_execute($stmt)) {
                     echo '<script>alert("Updated successfully!")</script>';

@@ -31,10 +31,9 @@
         </div>
     </form>
     <form action="" method="post" class="ml-4">
-        <input type="hidden" class="form-control" name="maLop" value="<?php echo $row['maLop']; ?>">
         <div class="form-group mt-2">
-            <label class="pb-2" for="tenLop">Tên lớp học</label>
-            <input type="text" class="form-control" name="tenLop">
+            <label class="pb-2" for="maLop">Mã lớp</label>
+            <input type="text" class="form-control" name="maLop">
         </div>
         <div class="form-group mt-2">
             <label class="pb-2" for="siSo">Sĩ số</label>
@@ -82,7 +81,7 @@
         $controller = new AdminController();
         $controller->handleAddClass();
     } else if($_POST['clear']){
-        $_POST['tenLop'] = '';
+        $_POST['maLop'] = '';
         $_POST['siSo'] = '';
         $_POST['siSoToiDa'] = '';
         $_POST['thoiGian'] = '';

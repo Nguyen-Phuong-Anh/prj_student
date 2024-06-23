@@ -1,7 +1,7 @@
 <?php
     class AuthModel {
         public function authenticate($username) {
-            require_once('./Config/DBConn.php');
+            require_once('./Config/DBConn.php'); 
             $sql = "SELECT * FROM taikhoan WHERE tenTaiKhoan= ?;";
             $stmt = mysqli_stmt_init($conn); //create a beforehand statement to ensure the security
 
@@ -43,7 +43,7 @@
                 mysqli_stmt_bind_param($stmt, "ss", $hashedPwd, $tenTK);
 
                 if(mysqli_stmt_execute($stmt)) {
-                    if($_SESSION['maVaiTro'] === '103') {
+                    if($_SESSION['role'] === '103') {
                         echo '<script>alert("Update successfully")</script>';
                         echo "<script>
                         window.location = 'http://localhost/prj_student/?route=pwd_student';
@@ -62,7 +62,7 @@
                 
                 $conn->close();
             } else {
-                if($_SESSION['maVaiTro'] === '103') {
+                if($_SESSION['role'] === '103') {
                     echo '<script>alert("Password and password re-entered are not similar!")</script>';
                     echo "<script>
                     window.location = 'http://localhost/prj_student/?route=pwd_student';
